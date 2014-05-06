@@ -39,9 +39,9 @@ VAR_DECL: 		SEMICOL
 VAR_DEFIN: 		EQUAL RVALUE SEMICOL
 			;
 RVALUE: 		NUMBER 	{ 
-					$$ = new SyntNode();
-					$$->children.push_back($1)
-				}
+					        $$ = new SyntNode();
+					        $$->children.push_back($1);
+				        }
 			;
 
 %%
