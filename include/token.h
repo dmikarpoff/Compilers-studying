@@ -1,0 +1,11 @@
+#ifndef _TOKEN_FOR_PARTIAL_CXX_INCLUDE_H_
+#define _TOKEN_FOR_PARTIAL_CXX_INCLUDE_H_
+
+enum TOKEN
+{
+	ID,
+	NUMBER,
+	SEMICOL
+};
+
+#endif
