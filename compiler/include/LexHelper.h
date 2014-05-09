@@ -4,11 +4,14 @@
 #include <string>
 #include <vector>
 
+#include <SyntaxTree.h>
+
 class LexHelper
 {
 public:
     static std::string tokenToString(int token);
     static LexHelper* getInstance();
+    static void setToken(TokenNode* token);
     void reset();
     size_t cur_line, cur_pos;
     std::vector<std::string> error_list;
