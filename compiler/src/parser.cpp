@@ -3,7 +3,6 @@
 #include <grammar.hpp>
 #include <SyntaxTree.h>
 #include <ParserHelper.h>
-#include <gvc.h>
 
 extern "C" FILE* yyin;
 
