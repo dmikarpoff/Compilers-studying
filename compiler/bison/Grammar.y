@@ -20,10 +20,12 @@ void yyerror(const char* message);
 %token<token_node> SEMICOL
 %token<token_node> ID 
 %token<token_node> EQUAL
+%token<token_node> COMMA
 
 %type<synt_node> RVALUE
-%type<synt_node> VAR_DEFIN
 %type<synt_node> VAR_DECL
+%type<synt_node> VAR_SINGLE_DECL
+%type<synt_node> VAR_DECL_TAIL
 %type<synt_node> UNIT
 %type<synt_node> SUPER_UNIT
 
@@ -51,35 +53,46 @@ UNIT: 			VAR_DECL UNIT
                     $$->text = "eps";
                 }
 			;
-VAR_DECL: 		ID ID SEMICOL
+VAR_DECL: 		ID VAR_SINGLE_DECL VAR_DECL_TAIL SEMICOL
                 {
                     $$ = new SyntNode();
                     $$->text = "VAR_DECL";
 			        $$->children.push_back($1);
 			        $$->children.push_back($2);
 			        $$->children.push_back($3);
+			        $$->children.push_back($4);
                 }
-                |
-			    ID ID VAR_DEFIN
-                {
-                    $$ = new SyntNode();
-                    $$->text = "VAR_DECL";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-			        $$->children.push_back($3);
-                }
+             ;
+VAR_DECL_TAIL:          COMMA VAR_SINGLE_DECL
+                        {
+                            $$ = new SyntNode();
+                            $$->text = "VAR_DECL_TAIL";
+			                $$->children.push_back($1);
+			                $$->children.push_back($2);
+                        }
+                        |
+                        {
+                            $$ = new SyntNode();
+                            $$->text = "eps";
+                        }
+			    ;
 
-			;
-
-VAR_DEFIN: 		EQUAL RVALUE SEMICOL
-                {
-                    $$ = new SyntNode();
-                    $$->text = "VAR_DEFIN";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-			        $$->children.push_back($3);
-                }
-			;
+VAR_SINGLE_DECL: 		ID EQUAL RVALUE
+                        {
+                            $$ = new SyntNode();
+                            $$->text = "VAR_SINGLE_DECL";
+			                $$->children.push_back($1);
+			                $$->children.push_back($2);
+			                $$->children.push_back($3);
+                        }
+                        |
+                        ID
+                        {
+                            $$ = new SyntNode();
+                            $$->text = "VAR_SINGLE_DECL";
+			                $$->children.push_back($1);
+                        } 
+			    ;
 RVALUE: 		NUMBER 	
                 {
 			        $$ = new SyntNode();

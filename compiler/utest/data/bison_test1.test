@@ -1,2 +1,3 @@
 int a = 2;
 double d;
+char c = 1, g;xd i, j = 1E-5;

@@ -5,7 +5,9 @@
 
 #include <boost/test/unit_test.hpp>
 #include <fstream>
-#include <grammar.h>
+#include <grammar.hpp>
+
+#include <LexHelper.h>
 
 extern int yylex();
 extern FILE* yyin;
@@ -24,7 +26,8 @@ BOOST_AUTO_TEST_CASE(lex_test1)
         tokens.push_back(token);
         token = yylex();
 	}
-	fclose(yyin);
+    fclose(yyin);
+    LexHelper::getInstance()->reset();
     BOOST_CHECK_EQUAL(tokens.size(), 20);
     BOOST_CHECK_EQUAL(tokens[0], ID);
     BOOST_CHECK_EQUAL(tokens[1], SEMICOL);
@@ -46,6 +49,26 @@ BOOST_AUTO_TEST_CASE(lex_test1)
     BOOST_CHECK_EQUAL(tokens[17], ID);
     BOOST_CHECK_EQUAL(tokens[18], ID);
     BOOST_CHECK_EQUAL(tokens[19], NUMBER);
+}
+
+BOOST_AUTO_TEST_CASE(lex_test2)
+{
+    yyin = fopen("../utest/data/lex_test2.test", "r");
+    BOOST_CHECK(yyin != NULL);
+    std::vector<int> tokens;
+    int token = 0;
+    token = yylex();
+    while (token != 0)
+    {
+        tokens.push_back(token);
+        token = yylex();
+    }
+    fclose(yyin);
+    LexHelper::getInstance()->reset();
+    BOOST_CHECK_EQUAL(tokens.size(), 3);
+    BOOST_CHECK(tokens[0] == EQUAL);
+    BOOST_CHECK(tokens[1] == SEMICOL);
+    BOOST_CHECK(tokens[2] == COMMA);
 }
 
 BOOST_AUTO_TEST_SUITE_END()

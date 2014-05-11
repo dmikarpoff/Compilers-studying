@@ -58,6 +58,12 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
                             helper->cur_pos += yyleng;
                         }
 
+","                     {
+                            yylval.token_node = registerToken(COMMA);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+                            return COMMA;
+                        }
+
 .				        {
 					        std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
