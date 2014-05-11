@@ -13,10 +13,11 @@ TokenNode* registerToken(int token);
 
 %}
 
-digit 				[0-9]
-letter 				[a-zA-Z]
-number				(([-+]?{digit}+"."?{digit}*)|(\.{digit}+))([Ee][+-]?{digit}+)?
-identificator 			{letter}({letter}|{digit})*
+digit 				    [0-9]
+letter 				    [a-zA-Z]
+number				    (([-+]?{digit}+"."?{digit}*)|(\.{digit}+))([Ee][+-]?{digit}+)?
+identificator 			_*{letter}({letter}|{digit}|_)*
+illegal_id              _*{digit}({letter}|{digit}|_)*
 
 %%
 
@@ -47,6 +48,15 @@ identificator 			{letter}({letter}|{digit})*
     					    LexHelper::getInstance()->cur_pos += yyleng;
         					return EQUAL;
         				}
+
+{illegal_id}            {
+                            std::stringstream ss;
+					        LexHelper* helper = LexHelper::getInstance();
+                            ss << "Illegal identifier \"" << yytext;
+                            ss << "\" at " << helper->cur_line << ':' << helper->cur_pos;
+                            helper->error_list.push_back(ss.str());
+                            helper->cur_pos += yyleng;
+                        }
 
 .				        {
 					        std::stringstream ss;
