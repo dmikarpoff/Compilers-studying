@@ -58,6 +58,30 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
                             helper->cur_pos += yyleng;
                         }
 
+")"                     {
+                            yylval.token_node = registerToken(RPAREN);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+                            return RPAREN;
+                        }
+
+"("                     {
+                            yylval.token_node = registerToken(LPAREN);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+                            return LPAREN;
+                        }
+
+"}"                     {
+                            yylval.token_node = registerToken(RBRACE);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+                            return RBRACE;
+                        }
+
+"{"                     {
+                            yylval.token_node = registerToken(LBRACE);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+                            return LBRACE;
+                        }
+
 ","                     {
                             yylval.token_node = registerToken(COMMA);
     					    LexHelper::getInstance()->cur_pos += yyleng;

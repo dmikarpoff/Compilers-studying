@@ -1,0 +1,7 @@
+void abs(double x);
+int zero() {
+}
+dsmna difdecl(double, void x, int a = 5)
+{
+}
+
