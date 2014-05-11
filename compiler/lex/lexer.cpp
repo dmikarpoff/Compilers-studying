@@ -801,7 +801,7 @@ case 6:
 YY_RULE_SETUP
 #line 45 "lex/vocabulary.flex"
 {
-                            yylval.token_node = registerToken(ID);
+                            yylval.token_node = registerToken(EQUAL);
     					    LexHelper::getInstance()->cur_pos += yyleng;
         					return EQUAL;
         				}

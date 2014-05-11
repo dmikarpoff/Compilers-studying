@@ -43,7 +43,7 @@ identificator 			{letter}({letter}|{digit})*
                             return SEMICOL;
 				        }
 =				        {
-                            yylval.token_node = registerToken(ID);
+                            yylval.token_node = registerToken(EQUAL);
     					    LexHelper::getInstance()->cur_pos += yyleng;
         					return EQUAL;
         				}
