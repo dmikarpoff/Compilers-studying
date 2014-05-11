@@ -30,6 +30,7 @@ public:
     }
 
     virtual ~SuperNode() { }
+    std::string text;
 private:
     SuperNode* parent;
 };
@@ -40,7 +41,6 @@ public:
     TokenNode();
 
     size_t line, position;
-    std::string text;
     int token;
 
     virtual ~TokenNode() { }

@@ -4,6 +4,7 @@
 #include <SyntaxTree.h>
 #include <LexHelper.h>
 #include <ParserHelper.h>
+#include <iostream>
 
 extern int yylex();
 void yyerror(const char* message);
@@ -22,7 +23,7 @@ void yyerror(const char* message);
 
 %type<synt_node> RVALUE
 %type<synt_node> VAR_DEFIN
-%type<synt_node> VAR_INFO
+%type<synt_node> VAR_DECL
 %type<synt_node> UNIT
 %type<synt_node> SUPER_UNIT
 
@@ -37,20 +38,23 @@ SUPER_UNIT:		UNIT
                 }
 			;
 
-UNIT: 			VAR_INFO UNIT 
+UNIT: 			VAR_DECL UNIT 
                 {
                     $$ = new SyntNode();
+                    $$->text = "UNIT";
 			        $$->children.push_back($1);
 			        $$->children.push_back($2);
                 }
                 |
                 {
                     $$ = new SyntNode();
+                    $$->text = "eps";
                 }
 			;
-VAR_INFO: 		ID ID SEMICOL
+VAR_DECL: 		ID ID SEMICOL
                 {
                     $$ = new SyntNode();
+                    $$->text = "VAR_DECL";
 			        $$->children.push_back($1);
 			        $$->children.push_back($2);
 			        $$->children.push_back($3);
@@ -59,6 +63,7 @@ VAR_INFO: 		ID ID SEMICOL
 			    ID ID VAR_DEFIN
                 {
                     $$ = new SyntNode();
+                    $$->text = "VAR_DECL";
 			        $$->children.push_back($1);
 			        $$->children.push_back($2);
 			        $$->children.push_back($3);
@@ -69,14 +74,16 @@ VAR_INFO: 		ID ID SEMICOL
 VAR_DEFIN: 		EQUAL RVALUE SEMICOL
                 {
                     $$ = new SyntNode();
+                    $$->text = "VAR_DEFIN";
 			        $$->children.push_back($1);
 			        $$->children.push_back($2);
 			        $$->children.push_back($3);
                 }
 			;
 RVALUE: 		NUMBER 	
-                { 
+                {
 			        $$ = new SyntNode();
+                    $$->text = "RVALUE";
 			        $$->children.push_back($1);
 		        }
 			;

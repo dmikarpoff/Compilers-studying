@@ -4,7 +4,6 @@ TokenNode::TokenNode():
     SuperNode(),
     line(0),
     position(0),
-    text(""),
     token(0)
 {
 }
