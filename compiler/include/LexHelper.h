@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 
+#include <grammar.hpp>
 #include <SyntaxTree.h>
 
 class LexHelper
@@ -14,6 +15,7 @@ public:
     static void setToken(TokenNode* token);
     void reset();
     size_t cur_line, cur_pos;
+    int cur_token;
     std::vector<std::string> error_list;
 private:
     LexHelper():

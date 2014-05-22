@@ -1,7 +1,19 @@
-void abs(double x);
+int null();
 int zero() {
+    return 0;
 }
-dsmna difdecl(double, void x, int a = 5)
+double abs(double x) {
+    if (x > -1E-9 && x < 1E-9) {
+        int a = 2;
+        return 0.0;
+    }
+    if (x < 0.0)
+        return -x;
+    else
+        return x;
+}
+
+int difdecl(double, void x, int a = 5)
 {
 }
 

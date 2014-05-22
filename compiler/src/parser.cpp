@@ -11,6 +11,7 @@ extern "C" FILE* yyin;
 
 void exportAST(SyntNode* ast, char* source, char* out)
 {
+    std::cout << "-------------------------" << std::endl;
     std::cout << "export START" << std::endl;
     GVC_t* gvc;
     std::stack<SuperNode*> stack;
@@ -27,14 +28,28 @@ void exportAST(SyntNode* ast, char* source, char* out)
         Agnode_t* gnode = gstack.top();
         stack.pop();
         gstack.pop();
+        std::cout << "cur_node: " << cur_node << std::endl;
         SyntNode* node = dynamic_cast<SyntNode*>(cur_node);
-        if (node != NULL)
+        std::cout << "cast successfull" << std::endl;
+        std::cout << node << std::endl;
+        if (cur_node != NULL)
+            std::cout << cur_node->text << ": ";
+        std::cout.flush();
+        if (node != NULL && node->children.size() != 0)
         {
+            std::cout << node->children.size() << std::endl;
             for (size_t i = 0; i < node->children.size(); ++i)
             {
                 ++counter;
                 std::stringstream conv;
                 conv << counter;
+                std::cout << node->children[i] << std::endl;
+                TokenNode* tn = static_cast<TokenNode*>(node->children[i]);
+                std::cout << tn << std::endl;
+                if (tn != NULL)
+                    std::cout << tn->token << std::endl;
+                std::cout << node->children[i]->text << " ";
+                std::cout.flush();
                 stack.push(node->children[i]);
                 tmp_str = node->children[i]->text + " (" + conv.str() + ")" + '\0';
                 Agnode_t* next = agnode(gast, &tmp_str[0], 1);
@@ -42,6 +57,7 @@ void exportAST(SyntNode* ast, char* source, char* out)
                 agedge(gast, gnode, next, 0, 1);
             }
         }
+        std::cout << std::endl;
     }
     gvc = gvContext();
     gvLayout(gvc, gast, "dot");

@@ -9,7 +9,8 @@ class SuperNode
 {
 public:
     SuperNode():
-        parent(NULL)
+        parent(NULL),
+        text("EMPTY")
     {
 
     }
