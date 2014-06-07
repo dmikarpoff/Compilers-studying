@@ -5,6 +5,7 @@ int zero() {
 double abs(double x) {
     if (x > -1E-9 && x < 1E-9) {
         int a = 2;
+        a = 3;
         return 0.0;
     }
     if (x < 0.0)

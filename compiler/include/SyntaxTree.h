@@ -47,6 +47,11 @@ public:
     virtual ~TokenNode() { }
 };
 
+class StringToken : public TokenNode {
+public:
+    std::string str;
+};
+
 class SyntNode : public SuperNode
 {
 public:

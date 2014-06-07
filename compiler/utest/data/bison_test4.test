@@ -1,0 +1,43 @@
+namespace MySpace {
+    int z = 2*(int)3.0;
+    int constOne();
+    class MyClass;
+}
+
+int MySpace::constOne() {
+    return 1;
+}
+
+class Point2D {
+    float x;
+public:
+    Point2D() {}
+    Point2D(float xx, float yy);
+    void setX(float xx = 0.0);
+    void setY(float yy);
+    int getX() {
+        return x;
+    }
+    int getY() {
+        return y;
+    }
+    ~Point2D();
+private:
+    float y;
+};
+
+void Point2D::setX(float xx) {
+    x = xx;
+}
+
+void Point2D::setY(float yy) {
+    y = yy;
+}
+
+Point2D::Point2D(float xx, float yy) {
+    x = xx;
+    y = yy;
+}
+
+Point2D::~Point2D() {
+}

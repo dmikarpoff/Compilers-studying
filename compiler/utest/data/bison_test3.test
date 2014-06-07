@@ -2,4 +2,21 @@ long fact(long n)
 {
     if (n == 0 || n == 1)
         return 1;
+    return n*fact(n-1);
+}
+
+long fact1(long x = 0){
+    long res = 1;
+    for (int i = 0; i < x; i = ++i)
+        res = res * (i + 1);
+    return res;
+}
+
+long gcd(long a, long b) {
+    while (a> 0 && b > 0)
+        if (a > b)
+            a = a % b;
+        else
+            b = b % a;
+    return (a + b);
 }
