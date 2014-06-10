@@ -1,0 +1,18 @@
+class Segment {
+ public:
+    class Point2D;
+    Point2D first, second;
+};
+
+class Segment::Point2D {
+ public:
+    Point2D(float xx, float yy);
+    float x, y;
+};
+
+int main() {
+    Segment::Point2D a(1.0, 2.0), b;
+    b.x = 0.0;
+    b.y = 5.0;
+    return 0;
+}

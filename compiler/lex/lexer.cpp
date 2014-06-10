@@ -369,8 +369,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 51
-#define YY_END_OF_BUFFER 52
+#define YY_NUM_RULES 52
+#define YY_END_OF_BUFFER 53
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -380,12 +380,12 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[125] =
     {   0,
-        0,    0,   52,   50,    2,    1,   31,   34,   41,   46,
-       45,   32,   35,   49,   36,   50,   33,   16,   29,   42,
-       38,   43,   37,   17,   40,   50,   17,   17,   17,   17,
-       17,   17,   17,   17,   17,   17,   48,   39,   47,   30,
-        1,   24,   22,   20,   21,   16,   16,   16,   44,   44,
-       18,   27,   25,   23,   26,   28,   17,   44,   17,    0,
+        0,    0,   53,   51,    2,    1,   31,   35,   42,   47,
+       46,   32,   36,   50,   37,   33,   34,   16,   29,   43,
+       39,   44,   38,   17,   41,   51,   17,   17,   17,   17,
+       17,   17,   17,   17,   17,   17,   49,   40,   48,   30,
+        1,   24,   22,   20,   21,   16,   16,   16,   45,   45,
+       18,   27,   25,   23,   26,   28,   17,   45,   17,    0,
        17,   17,   17,   11,   17,   17,    7,   17,   17,   17,
        17,   17,   19,    0,   16,    0,   16,   17,   17,   17,
        17,    9,   17,   17,   17,   17,   17,   17,   16,   17,
@@ -989,16 +989,16 @@ case 17:
 YY_RULE_SETUP
 #line 117 "lex/vocabulary.flex"
 {
-                            std::string stext(yytext);
-                            const std::set<std::string>& typeset = ParserHelper::getInstance()->types;
+                            std::string stext = std::string(yytext);
+                            const std::set<std::string>& typeset = LexHelper::getInstance()->types;
                             if (typeset.find(stext) == typeset.end()) {
                                 std::cout << "get ID" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(ID));
                 				return ID;
                             } else {
-                                std::cout << "get TYPE" << std::endl;
-                                yylval.str_node = dynamic_cast<StringToken*>(registerToken(TYPE));
-                				return TYPE;
+                                std::cout << "get BASIC_TYPE" << std::endl;
+                                yylval.str_node = dynamic_cast<StringToken*>(registerToken(BASIC_TYPE));
+                				return BASIC_TYPE;
                             }
     					    LexHelper::getInstance()->cur_pos += yyleng;
 				        }
@@ -1142,32 +1142,41 @@ case 33:
 YY_RULE_SETUP
 #line 206 "lex/vocabulary.flex"
 {
-                            yylval.token_node = registerToken(DIV_OP);
+                            yylval.token_node = registerToken(DOT);
     					    LexHelper::getInstance()->cur_pos += yyleng;
-            				return DIV_OP;
+            				return DOT;
                         }
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
 #line 211 "lex/vocabulary.flex"
 {
+                            yylval.token_node = registerToken(DIV_OP);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+            				return DIV_OP;
+                        }
+	YY_BREAK
+case 35:
+YY_RULE_SETUP
+#line 216 "lex/vocabulary.flex"
+{
                             yylval.token_node = registerToken(REM_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return REM_OP;
                         }
 	YY_BREAK
-case 35:
+case 36:
 YY_RULE_SETUP
-#line 217 "lex/vocabulary.flex"
+#line 222 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(PLUS_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return PLUS_OP;
                         }
 	YY_BREAK
-case 36:
+case 37:
 YY_RULE_SETUP
-#line 222 "lex/vocabulary.flex"
+#line 227 "lex/vocabulary.flex"
 {
                             std::cout << "get MINUS_OP" << std::endl;
                             yylval.token_node = registerToken(MINUS_OP);
@@ -1175,54 +1184,54 @@ YY_RULE_SETUP
             				return MINUS_OP;
                         }
 	YY_BREAK
-case 37:
+case 38:
 YY_RULE_SETUP
-#line 228 "lex/vocabulary.flex"
+#line 233 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(GT_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return GT_COMP_OP;
                         }
 	YY_BREAK
-case 38:
+case 39:
 YY_RULE_SETUP
-#line 233 "lex/vocabulary.flex"
+#line 238 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LT_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LT_COMP_OP;
                         }
 	YY_BREAK
-case 39:
+case 40:
 YY_RULE_SETUP
-#line 238 "lex/vocabulary.flex"
+#line 243 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_OR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_OR_OP;
                         }
 	YY_BREAK
-case 40:
+case 41:
 YY_RULE_SETUP
-#line 243 "lex/vocabulary.flex"
+#line 248 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_XOR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_XOR_OP;
                         }
 	YY_BREAK
-case 41:
+case 42:
 YY_RULE_SETUP
-#line 248 "lex/vocabulary.flex"
+#line 253 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_AND_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_AND_OP;
                         }
 	YY_BREAK
-case 42:
+case 43:
 YY_RULE_SETUP
-#line 253 "lex/vocabulary.flex"
+#line 258 "lex/vocabulary.flex"
 {
                             std::cout << "get SEMICOL" << std::endl;
                             yylval.token_node = registerToken(SEMICOL);
@@ -1230,18 +1239,18 @@ YY_RULE_SETUP
                             return SEMICOL;
 				        }
 	YY_BREAK
-case 43:
+case 44:
 YY_RULE_SETUP
-#line 259 "lex/vocabulary.flex"
+#line 264 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(EQUAL);
     					    LexHelper::getInstance()->cur_pos += yyleng;
         					return EQUAL;
         				}
 	YY_BREAK
-case 44:
+case 45:
 YY_RULE_SETUP
-#line 265 "lex/vocabulary.flex"
+#line 270 "lex/vocabulary.flex"
 {
                             std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
@@ -1251,9 +1260,9 @@ YY_RULE_SETUP
                             helper->cur_pos += yyleng;
                         }
 	YY_BREAK
-case 45:
+case 46:
 YY_RULE_SETUP
-#line 274 "lex/vocabulary.flex"
+#line 279 "lex/vocabulary.flex"
 {
                             std::cout << "get RPAREN" << std::endl;
                             yylval.token_node = registerToken(RPAREN);
@@ -1261,9 +1270,9 @@ YY_RULE_SETUP
                             return RPAREN;
                         }
 	YY_BREAK
-case 46:
+case 47:
 YY_RULE_SETUP
-#line 281 "lex/vocabulary.flex"
+#line 286 "lex/vocabulary.flex"
 {
                             std::cout << "get LPAREN" << std::endl;
                             yylval.token_node = registerToken(LPAREN);
@@ -1271,9 +1280,9 @@ YY_RULE_SETUP
                             return LPAREN;
                         }
 	YY_BREAK
-case 47:
+case 48:
 YY_RULE_SETUP
-#line 288 "lex/vocabulary.flex"
+#line 293 "lex/vocabulary.flex"
 {
                             std::cout << "get RBRACE" << std::endl;
                             yylval.token_node = registerToken(RBRACE);
@@ -1281,9 +1290,9 @@ YY_RULE_SETUP
                             return RBRACE;
                         }
 	YY_BREAK
-case 48:
+case 49:
 YY_RULE_SETUP
-#line 295 "lex/vocabulary.flex"
+#line 300 "lex/vocabulary.flex"
 {
                             std::cout << "get LBRACE" << std::endl;
                             yylval.token_node = registerToken(LBRACE);
@@ -1291,9 +1300,9 @@ YY_RULE_SETUP
                             return LBRACE;
                         }
 	YY_BREAK
-case 49:
+case 50:
 YY_RULE_SETUP
-#line 302 "lex/vocabulary.flex"
+#line 307 "lex/vocabulary.flex"
 {
                             std::cout << "get COMMA" << std::endl;
                             yylval.token_node = registerToken(COMMA);
@@ -1301,9 +1310,9 @@ YY_RULE_SETUP
                             return COMMA;
                         }
 	YY_BREAK
-case 50:
+case 51:
 YY_RULE_SETUP
-#line 309 "lex/vocabulary.flex"
+#line 314 "lex/vocabulary.flex"
 {
 					        std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
@@ -1313,12 +1322,12 @@ YY_RULE_SETUP
 					        helper->cur_pos++;
 				        }
 	YY_BREAK
-case 51:
+case 52:
 YY_RULE_SETUP
-#line 318 "lex/vocabulary.flex"
+#line 323 "lex/vocabulary.flex"
 ECHO;
 	YY_BREAK
-#line 1322 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
+#line 1331 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -2316,7 +2325,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 318 "lex/vocabulary.flex"
+#line 323 "lex/vocabulary.flex"
 
 
 
@@ -2327,7 +2336,7 @@ void initScanner() {
 TokenNode* registerToken(int token) {
     TokenNode* token_node;
     StringToken* str_node;
-    if (token == ID || token == TYPE) {
+    if (token == ID || token == BASIC_TYPE) {
         str_node = new StringToken();
         token_node = static_cast<TokenNode*>(str_node);
     } else {

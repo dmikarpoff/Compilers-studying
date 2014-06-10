@@ -57,7 +57,13 @@ class SyntNode : public SuperNode
 public:
     SyntNode() {}
     std::vector<SuperNode*> children;
-    ~SyntNode();
+    virtual ~SyntNode();
+};
+
+class IDNode : public SyntNode {
+public:
+    std::string id;
+    virtual ~IDNode() {}
 };
 
 #endif

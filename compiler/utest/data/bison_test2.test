@@ -14,7 +14,7 @@ double abs(double x) {
         return x;
 }
 
-int difdecl(double, void x, int a = 5)
+int difdecl(double z, void x, int a = 5)
 {
 }
 

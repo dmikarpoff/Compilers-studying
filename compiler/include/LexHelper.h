@@ -3,6 +3,7 @@
 
 #include <string>
 #include <vector>
+#include <set>
 
 #include <grammar.hpp>
 #include <SyntaxTree.h>
@@ -16,14 +17,10 @@ public:
     void reset();
     size_t cur_line, cur_pos;
     int cur_token;
+    std::set<std::string> types;
     std::vector<std::string> error_list;
 private:
-    LexHelper():
-        cur_line(1),
-        cur_pos(1)
-    {
-
-    }
+    LexHelper();
     ~LexHelper()
     {
 

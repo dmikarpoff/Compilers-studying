@@ -115,16 +115,16 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
 					        return NUMBER;
 				        }
 {identificator}			{
-                            std::string stext(yytext);
-                            const std::set<std::string>& typeset = ParserHelper::getInstance()->types;
+                            std::string stext = std::string(yytext);
+                            const std::set<std::string>& typeset = LexHelper::getInstance()->types;
                             if (typeset.find(stext) == typeset.end()) {
                                 std::cout << "get ID" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(ID));
                 				return ID;
                             } else {
-                                std::cout << "get TYPE" << std::endl;
-                                yylval.str_node = dynamic_cast<StringToken*>(registerToken(TYPE));
-                				return TYPE;
+                                std::cout << "get BASIC_TYPE" << std::endl;
+                                yylval.str_node = dynamic_cast<StringToken*>(registerToken(BASIC_TYPE));
+                				return BASIC_TYPE;
                             }
     					    LexHelper::getInstance()->cur_pos += yyleng;
 				        }
@@ -202,6 +202,11 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
                             yylval.token_node = registerToken(MULT_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return MULT_OP;
+                        }
+"."                     {
+                            yylval.token_node = registerToken(DOT);
+    					    LexHelper::getInstance()->cur_pos += yyleng;
+            				return DOT;
                         }
 "/"                     {
                             yylval.token_node = registerToken(DIV_OP);
@@ -324,7 +329,7 @@ void initScanner() {
 TokenNode* registerToken(int token) {
     TokenNode* token_node;
     StringToken* str_node;
-    if (token == ID || token == TYPE) {
+    if (token == ID || token == BASIC_TYPE) {
         str_node = new StringToken();
         token_node = static_cast<TokenNode*>(str_node);
     } else {

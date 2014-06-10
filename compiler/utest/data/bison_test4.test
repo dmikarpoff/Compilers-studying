@@ -41,3 +41,11 @@ Point2D::Point2D(float xx, float yy) {
 
 Point2D::~Point2D() {
 }
+
+int main() {
+    Point2D a, b(6, -2.0);
+    a.x = (float)4;
+    a.setY(1.0);
+    double d = (double)(std::abs(a.getX() - b.x) + std::abs(a.y - b.getY()));
+    return 0;
+}
