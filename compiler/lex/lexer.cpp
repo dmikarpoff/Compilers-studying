@@ -369,8 +369,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	*yy_cp = '\0'; \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 52
-#define YY_END_OF_BUFFER 53
+#define YY_NUM_RULES 47
+#define YY_END_OF_BUFFER 48
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -378,22 +378,19 @@ struct yy_trans_info
 	flex_int32_t yy_verify;
 	flex_int32_t yy_nxt;
 	};
-static yyconst flex_int16_t yy_accept[125] =
+static yyconst flex_int16_t yy_accept[101] =
     {   0,
-        0,    0,   53,   51,    2,    1,   31,   35,   42,   47,
-       46,   32,   36,   50,   37,   33,   34,   16,   29,   43,
-       39,   44,   38,   17,   41,   51,   17,   17,   17,   17,
-       17,   17,   17,   17,   17,   17,   49,   40,   48,   30,
-        1,   24,   22,   20,   21,   16,   16,   16,   45,   45,
-       18,   27,   25,   23,   26,   28,   17,   45,   17,    0,
-       17,   17,   17,   11,   17,   17,    7,   17,   17,   17,
-       17,   17,   19,    0,   16,    0,   16,   17,   17,   17,
-       17,    9,   17,   17,   17,   17,   17,   17,   16,   17,
-       17,   17,    8,   17,   17,   17,   17,   17,   17,    4,
+        0,    0,   48,   46,    3,    2,   26,   30,   37,   42,
+       41,   27,   31,   45,   32,   28,   29,   13,   38,   34,
+       39,   33,   14,   36,   46,   14,   14,   14,   14,   14,
+       14,   14,   14,   44,   35,   43,   25,    2,   20,   18,
+       16,   17,   13,    0,    0,   13,   13,   40,   40,   23,
+       21,   19,   22,   24,   14,   40,   14,    0,   14,   14,
+       14,   11,   14,   14,    7,   14,   14,   15,    0,    0,
+        0,    0,    1,   13,    0,   13,   14,   14,   14,   14,
+        9,   14,   14,   13,   14,   14,   14,    8,   14,   14,
+        5,   12,   14,   14,   10,   14,    4,   14,    6,    0
 
-       12,   17,   17,   17,   17,   17,   17,   10,   17,   17,
-       17,   17,   13,    3,   17,   17,   14,   17,    5,   17,
-       17,    6,   15,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -401,17 +398,17 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1,    1,    1,    1,    2,    3,
         1,    1,    4,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    2,    5,    1,    1,    1,    6,    7,    1,    8,
-        9,   10,   11,   12,   13,   14,   15,   16,   16,   16,
-       16,   16,   16,   16,   16,   16,   16,   17,   18,   19,
-       20,   21,    1,    1,   22,   22,   22,   22,   23,   22,
-       22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
-       22,   22,   22,   22,   22,   22,   22,   22,   22,   22,
-        1,    1,    1,   24,   25,    1,   26,   27,   28,   29,
+        1,    2,    5,    6,    1,    1,    7,    8,    1,    9,
+       10,   11,   12,   13,   14,   15,   16,   17,   17,   17,
+       17,   17,   17,   17,   17,   17,   17,    1,   18,   19,
+       20,   21,   22,    1,   23,   23,   23,   23,   24,   23,
+       23,   23,   23,   23,   23,   23,   23,   23,   23,   23,
+       23,   23,   23,   23,   23,   23,   23,   23,   23,   23,
+        1,    1,    1,   25,   26,    1,   27,   28,   29,   30,
 
-       30,   31,   22,   32,   33,   22,   34,   35,   36,   37,
-       38,   39,   22,   40,   41,   42,   43,   44,   45,   22,
-       22,   22,   46,   47,   48,   49,    1,    1,    1,    1,
+       31,   32,   23,   33,   34,   23,   35,   36,   23,   37,
+       38,   23,   23,   39,   40,   41,   42,   23,   43,   23,
+       23,   23,   44,   45,   46,   47,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
@@ -428,103 +425,97 @@ static yyconst flex_int32_t yy_ec[256] =
         1,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int32_t yy_meta[50] =
+static yyconst flex_int32_t yy_meta[48] =
     {   0,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    2,    1,    3,    1,    1,    1,    1,
-        1,    3,    3,    1,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    3,    3,    3,    3,    3,
-        3,    3,    3,    3,    3,    1,    1,    1,    1
+        1,    1,    1,    2,    1,    3,    1,    1,    2,    2,
+        1,    1,    1,    1,    4,    3,    5,    1,    1,    1,
+        1,    2,    5,    5,    1,    5,    5,    5,    5,    5,
+        5,    5,    5,    5,    5,    5,    5,    5,    5,    5,
+        5,    5,    5,    1,    1,    1,    1
     } ;
 
-static yyconst flex_int16_t yy_base[128] =
+static yyconst flex_int16_t yy_base[106] =
     {   0,
-        0,    0,  158,  159,  159,  153,  136,  159,  148,  159,
-      159,  159,  143,  159,  140,  136,  159,   36,  134,  159,
-       34,  130,   35,    0,  159,   35,  109,   23,  110,  112,
-      108,  114,  118,   22,  113,  110,  159,   94,  159,  159,
-      159,  159,  159,  159,  159,   41,   47,   53,  126,   68,
-      159,  159,  159,  159,  159,  159,    0,  125,    0,   62,
-      108,  111,   99,    0,   94,   94,    0,   97,   35,  105,
-       89,   97,  159,   75,   69,  113,   58,  102,   86,   84,
-       95,    0,   94,   79,   80,   86,   77,   84,  102,   83,
-       75,   82,    0,   73,   87,   82,   78,   70,   79,    0,
+        0,    0,  144,  145,  145,  139,  122,  145,  133,  145,
+      145,  145,  128,  145,  125,  121,   37,   34,  145,   35,
+      117,   36,    0,  145,   33,   97,   24,   97,   98,   95,
+      100,  100,   97,  145,   84,  145,  145,  145,  145,  145,
+      145,  145,   44,  117,  124,   46,   49,  111,   57,  145,
+      145,  145,  145,  145,    0,  110,    0,   50,   93,   96,
+       85,    0,   81,   81,    0,   78,   84,  145,   67,  106,
+      100,  112,  145,   61,   97,   71,   86,   72,   70,   79,
+        0,   67,   72,   90,   71,   65,   67,    0,   58,   60,
+        0,    0,   53,   52,    0,   45,    0,   52,    0,  145,
 
-        0,   71,   68,   64,   77,   76,   66,    0,   59,   72,
-       67,   54,    0,    0,   65,   66,    0,   63,    0,   60,
-       60,    0,    0,  159,   98,   77,   72
+       89,   77,   47,   94,   99
     } ;
 
-static yyconst flex_int16_t yy_def[128] =
+static yyconst flex_int16_t yy_def[106] =
     {   0,
-      124,    1,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  125,  124,  124,
-      124,  124,  124,  126,  124,  127,  126,  126,  126,  126,
-      126,  126,  126,  126,  126,  126,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  125,  125,  125,
-      124,  124,  124,  124,  124,  124,  126,  125,  126,  127,
-      126,  126,  126,  126,  126,  126,  126,  126,  126,  126,
-      126,  126,  124,  124,  124,  124,  125,  126,  126,  126,
-      126,  126,  126,  126,  126,  126,  126,  126,  124,  126,
-      126,  126,  126,  126,  126,  126,  126,  126,  126,  126,
+      100,    1,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  101,  100,  100,
+      100,  100,  102,  100,  103,  102,  102,  102,  102,  102,
+      102,  102,  102,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  104,  105,  100,  101,  101,  101,  100,
+      100,  100,  100,  100,  102,  101,  102,  103,  102,  102,
+      102,  102,  102,  102,  102,  102,  102,  100,  100,  104,
+      100,  105,  100,  100,  100,  101,  102,  102,  102,  102,
+      102,  102,  102,  100,  102,  102,  102,  102,  102,  102,
+      102,  102,  102,  102,  102,  102,  102,  102,  102,    0,
 
-      126,  126,  126,  126,  126,  126,  126,  126,  126,  126,
-      126,  126,  126,  126,  126,  126,  126,  126,  126,  126,
-      126,  126,  126,    0,  124,  124,  124
+      100,  100,  100,  100,  100
     } ;
 
-static yyconst flex_int16_t yy_nxt[209] =
+static yyconst flex_int16_t yy_nxt[193] =
     {   0,
-        4,    5,    6,    4,    7,    8,    9,   10,   11,   12,
-       13,   14,   15,   16,   17,   18,   19,   20,   21,   22,
-       23,   24,   24,   25,   26,   24,   27,   28,   29,   30,
-       31,   24,   32,   24,   24,   24,   33,   24,   34,   35,
-       24,   24,   24,   24,   36,   37,   38,   39,   40,   47,
-       58,   48,   52,   53,   55,   56,   46,   62,   50,   60,
-       63,   69,   75,   74,   70,   50,   47,   84,   48,   74,
-       74,  124,   85,   77,   59,   50,   74,   58,   76,   57,
-       76,  124,   50,   77,   75,   76,   60,   76,  123,  122,
-       89,   74,  121,  120,  119,  118,  117,  116,   74,   49,
+        4,    5,    6,    4,    7,    4,    8,    9,   10,   11,
+       12,   13,   14,   15,   16,   17,   18,   19,   20,   21,
+       22,    4,   23,   23,   24,   25,   23,   26,   27,   28,
+       29,   30,   23,   31,   23,   23,   23,   23,   32,   23,
+       23,   23,   33,   34,   35,   36,   37,   44,   46,   56,
+       47,   57,   45,   50,   51,   53,   54,   49,   58,   60,
+       43,   61,   74,   46,   49,   47,   56,   69,   75,   69,
+       75,  100,   49,   76,   69,   58,   69,   74,   75,   49,
+       75,   55,   99,   84,   69,  100,   98,   76,   97,   96,
+       95,   69,   48,   48,   70,   70,   94,   70,   70,   72,
 
-       49,  115,  114,  113,  112,  111,  110,  109,  108,  107,
-      106,  105,  104,  103,  102,  101,  100,   89,   99,   98,
-       97,   96,   95,   94,   93,   92,   91,   90,   89,   88,
-       87,   86,   83,   82,   81,   80,   79,   78,  124,  124,
-       73,   72,   71,   68,   67,   66,   65,   64,   61,   54,
-       51,   46,   45,   44,   43,   42,   41,  124,    3,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
+       93,   72,   72,   72,   92,   91,   84,   90,   89,   88,
+       87,   86,   85,   84,   73,   73,   71,   83,   82,   81,
+       80,   79,   78,   77,  100,  100,   73,   71,   68,   67,
+       66,   65,   64,   63,   62,   59,   52,   43,   42,   41,
+       40,   39,   38,  100,    3,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100
 
-      124,  124,  124,  124,  124,  124,  124,  124
     } ;
 
-static yyconst flex_int16_t yy_chk[209] =
+static yyconst flex_int16_t yy_chk[193] =
     {   0,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
         1,    1,    1,    1,    1,    1,    1,    1,    1,    1,
-        1,    1,    1,    1,    1,    1,    1,    1,    1,   18,
-       26,   18,   21,   21,   23,   23,   46,   28,   18,   26,
-       28,   34,   47,   46,   34,   18,   48,   69,   48,   47,
-       46,   77,   69,   77,  127,   48,   47,   60,   50,  126,
-       50,   50,   48,   50,   75,   74,   60,   74,  121,  120,
-       74,   75,  118,  116,  115,  112,  111,  110,   75,  125,
+        1,    1,    1,    1,    1,    1,    1,   17,   18,   25,
+       18,  103,   17,   20,   20,   22,   22,   18,   25,   27,
+       43,   27,   46,   47,   18,   47,   58,   43,   49,   46,
+       49,   49,   47,   49,   43,   58,   46,   74,   69,   47,
+       69,  102,   98,   69,   74,   76,   96,   76,   94,   93,
+       90,   74,  101,  101,  104,  104,   89,  104,  104,  105,
 
-      125,  109,  107,  106,  105,  104,  103,  102,   99,   98,
-       97,   96,   95,   94,   92,   91,   90,   89,   88,   87,
-       86,   85,   84,   83,   81,   80,   79,   78,   76,   72,
-       71,   70,   68,   66,   65,   63,   62,   61,   58,   49,
-       38,   36,   35,   33,   32,   31,   30,   29,   27,   22,
-       19,   16,   15,   13,    9,    7,    6,    3,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
-      124,  124,  124,  124,  124,  124,  124,  124,  124,  124,
+       87,  105,  105,  105,   86,   85,   84,   83,   82,   80,
+       79,   78,   77,   75,   72,   71,   70,   67,   66,   64,
+       63,   61,   60,   59,   56,   48,   45,   44,   35,   33,
+       32,   31,   30,   29,   28,   26,   21,   16,   15,   13,
+        9,    7,    6,    3,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100,  100,  100,  100,  100,  100,  100,  100,  100,
+      100,  100
 
-      124,  124,  124,  124,  124,  124,  124,  124
     } ;
 
 static yy_state_type yy_last_accepting_state;
@@ -556,7 +547,7 @@ TokenNode* registerToken(int token);
 
 #define YY_USER_INIT initScanner()
 
-#line 560 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
+#line 551 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
 
 #define INITIAL 0
 
@@ -743,10 +734,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 23 "lex/vocabulary.flex"
+#line 24 "lex/vocabulary.flex"
 
 
-#line 750 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
+#line 741 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
 
 	if ( !(yy_init) )
 		{
@@ -799,13 +790,13 @@ yy_match:
 			while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 				{
 				yy_current_state = (int) yy_def[yy_current_state];
-				if ( yy_current_state >= 125 )
+				if ( yy_current_state >= 101 )
 					yy_c = yy_meta[(unsigned int) yy_c];
 				}
 			yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
 			++yy_cp;
 			}
-		while ( yy_base[yy_current_state] != 159 );
+		while ( yy_base[yy_current_state] != 145 );
 
 yy_find_action:
 		yy_act = yy_accept[yy_current_state];
@@ -832,64 +823,67 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 25 "lex/vocabulary.flex"
+#line 26 "lex/vocabulary.flex"
+{
+                            size_t add_line = 0;
+                            for (size_t i = 0; i < yyleng; ++i)
+                                if (yytext[i] == '\n')
+                                    ++add_line;
+					        LexHelper::getInstance()->cur_line += add_line;
+					        LexHelper::getInstance()->cur_pos += yyleng;
+                        }
+	YY_BREAK
+case 2:
+/* rule 2 can match eol */
+YY_RULE_SETUP
+#line 35 "lex/vocabulary.flex"
 {
 					        LexHelper::getInstance()->cur_line++;
 					        LexHelper::getInstance()->cur_pos = 1;
 				        }
 	YY_BREAK
-case 2:
+case 3:
 YY_RULE_SETUP
-#line 29 "lex/vocabulary.flex"
+#line 39 "lex/vocabulary.flex"
 {
 					        LexHelper::getInstance()->cur_pos += yyleng;
 				        }
 	YY_BREAK
-case 3:
+case 4:
 YY_RULE_SETUP
-#line 32 "lex/vocabulary.flex"
+#line 43 "lex/vocabulary.flex"
 {
-                            std::cout << "get RETURN" << std::endl;
+//                            std::cout << "get RETURN" << std::endl;
                             yylval.token_node = registerToken(RETURN);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return RETURN;
                         }
 	YY_BREAK
-case 4:
+case 5:
 YY_RULE_SETUP
-#line 38 "lex/vocabulary.flex"
+#line 49 "lex/vocabulary.flex"
 {
-                            std::cout << "get BREAK" << std::endl;
+//                            std::cout << "get BREAK" << std::endl;
                             yylval.token_node = registerToken(BREAK);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return BREAK;
                         }
 	YY_BREAK
-case 5:
+case 6:
 YY_RULE_SETUP
-#line 44 "lex/vocabulary.flex"
+#line 55 "lex/vocabulary.flex"
 {
-                            std::cout << "get CONTINUE" << std::endl;
+//                            std::cout << "get CONTINUE" << std::endl;
                             yylval.token_node = registerToken(CONTINUE);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return CONTINUE;
                         }
 	YY_BREAK
-case 6:
-YY_RULE_SETUP
-#line 50 "lex/vocabulary.flex"
-{
-                            std::cout << "get NAMESPACE" << std::endl;
-                            yylval.token_node = registerToken(NAMESPACE);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return NAMESPACE;
-                        }
-	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 56 "lex/vocabulary.flex"
+#line 61 "lex/vocabulary.flex"
 {
-                            std::cout << "get IF" << std::endl;
+//                            std::cout << "get IF" << std::endl;
                             yylval.token_node = registerToken(IF);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return IF;
@@ -897,9 +891,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 62 "lex/vocabulary.flex"
+#line 67 "lex/vocabulary.flex"
 {
-                            std::cout << "get ELSE" << std::endl;
+//                            std::cout << "get ELSE" << std::endl;
                             yylval.token_node = registerToken(ELSE);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return ELSE;
@@ -907,9 +901,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 68 "lex/vocabulary.flex"
+#line 73 "lex/vocabulary.flex"
 {
-                            std::cout << "get FOR" << std::endl;
+//                            std::cout << "get FOR" << std::endl;
                             yylval.token_node = registerToken(FOR);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return FOR;
@@ -917,9 +911,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 74 "lex/vocabulary.flex"
+#line 79 "lex/vocabulary.flex"
 {
-                            std::cout << "get WHILE" << std::endl;
+//                            std::cout << "get WHILE" << std::endl;
                             yylval.token_node = registerToken(WHILE);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return WHILE;
@@ -927,9 +921,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 80 "lex/vocabulary.flex"
+#line 85 "lex/vocabulary.flex"
 {
-                            std::cout << "get DO" << std::endl;
+//                            std::cout << "get DO" << std::endl;
                             yylval.token_node = registerToken(DO);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return DO;
@@ -937,9 +931,9 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 86 "lex/vocabulary.flex"
+#line 91 "lex/vocabulary.flex"
 {
-                            std::cout << "get CLASS" << std::endl;
+//                            std::cout << "get CLASS" << std::endl;
                             yylval.token_node = registerToken(CLASS);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return CLASS;
@@ -947,387 +941,337 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 93 "lex/vocabulary.flex"
+#line 98 "lex/vocabulary.flex"
 {
-                            std::cout << "get PUBLIC" << std::endl;
-                            yylval.token_node = registerToken(PUBLIC);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return PUBLIC;
-                        }
-	YY_BREAK
-case 14:
-YY_RULE_SETUP
-#line 99 "lex/vocabulary.flex"
-{
-                            std::cout << "get PRIVATE" << std::endl;
-                            yylval.token_node = registerToken(PRIVATE);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return PRIVATE;
-                        }
-	YY_BREAK
-case 15:
-YY_RULE_SETUP
-#line 105 "lex/vocabulary.flex"
-{
-                            std::cout << "get PROTECTED" << std::endl;
-                            yylval.token_node = registerToken(PROTECTED);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return PROTECTED;
-                        }
-	YY_BREAK
-case 16:
-YY_RULE_SETUP
-#line 111 "lex/vocabulary.flex"
-{
-                            std::cout << "get NUMBER" << std::endl;
+//                            std::cout << "get NUMBER" << std::endl;
                             yylval.token_node = registerToken(NUMBER);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return NUMBER;
 				        }
 	YY_BREAK
-case 17:
+case 14:
 YY_RULE_SETUP
-#line 117 "lex/vocabulary.flex"
+#line 104 "lex/vocabulary.flex"
 {
                             std::string stext = std::string(yytext);
                             const std::set<std::string>& typeset = LexHelper::getInstance()->types;
                             if (typeset.find(stext) == typeset.end()) {
-                                std::cout << "get ID" << std::endl;
+//                                std::cout << "get ID" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(ID));
                 				return ID;
                             } else {
-                                std::cout << "get BASIC_TYPE" << std::endl;
+//                                std::cout << "get BASIC_TYPE" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(BASIC_TYPE));
                 				return BASIC_TYPE;
                             }
     					    LexHelper::getInstance()->cur_pos += yyleng;
 				        }
 	YY_BREAK
-case 18:
+case 15:
 YY_RULE_SETUP
-#line 131 "lex/vocabulary.flex"
-{
-                            yylval.token_node = registerToken(DBL_COLON);
-    					    LexHelper::getInstance()->cur_pos += yyleng;
-            				return DBL_COLON;
-                        }
-	YY_BREAK
-case 19:
-YY_RULE_SETUP
-#line 136 "lex/vocabulary.flex"
+#line 118 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LOGIC_OR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LOGIC_OR_OP;
                         }
 	YY_BREAK
-case 20:
+case 16:
 YY_RULE_SETUP
-#line 141 "lex/vocabulary.flex"
+#line 123 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(INCR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return INCR_OP;
                         }
 	YY_BREAK
-case 21:
+case 17:
 YY_RULE_SETUP
-#line 146 "lex/vocabulary.flex"
+#line 128 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(DECR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return DECR_OP;
                         }
 	YY_BREAK
-case 22:
+case 18:
 YY_RULE_SETUP
-#line 151 "lex/vocabulary.flex"
+#line 133 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LOGIC_AND_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LOGIC_AND_OP;
                         }
 	YY_BREAK
-case 23:
+case 19:
 YY_RULE_SETUP
-#line 156 "lex/vocabulary.flex"
+#line 138 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(EQ_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return EQ_COMP_OP;
                         }
 	YY_BREAK
-case 24:
+case 20:
 YY_RULE_SETUP
-#line 161 "lex/vocabulary.flex"
+#line 143 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(NE_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return NE_COMP_OP;
                         }
 	YY_BREAK
-case 25:
+case 21:
 YY_RULE_SETUP
-#line 166 "lex/vocabulary.flex"
+#line 148 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LE_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LE_COMP_OP;
                         }
 	YY_BREAK
-case 26:
+case 22:
 YY_RULE_SETUP
-#line 171 "lex/vocabulary.flex"
+#line 153 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(GE_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return GE_COMP_OP;
                         }
 	YY_BREAK
-case 27:
+case 23:
 YY_RULE_SETUP
-#line 176 "lex/vocabulary.flex"
+#line 158 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LSHIFT_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LSHIFT_OP;
                         }
 	YY_BREAK
-case 28:
+case 24:
 YY_RULE_SETUP
-#line 181 "lex/vocabulary.flex"
+#line 163 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(RSHIFT_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return RSHIFT_OP;
                         }
 	YY_BREAK
-case 29:
+case 25:
 YY_RULE_SETUP
-#line 186 "lex/vocabulary.flex"
-{
-                            yylval.token_node = registerToken(COLON);
-    					    LexHelper::getInstance()->cur_pos += yyleng;
-            				return COLON;
-                        }
-	YY_BREAK
-case 30:
-YY_RULE_SETUP
-#line 191 "lex/vocabulary.flex"
+#line 168 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_NOT_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_NOT_OP;
                         }
 	YY_BREAK
-case 31:
+case 26:
 YY_RULE_SETUP
-#line 196 "lex/vocabulary.flex"
+#line 173 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LOGIC_NOT);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LOGIC_NOT;
                         }
 	YY_BREAK
-case 32:
+case 27:
 YY_RULE_SETUP
-#line 201 "lex/vocabulary.flex"
+#line 178 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(MULT_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return MULT_OP;
                         }
 	YY_BREAK
-case 33:
+case 28:
 YY_RULE_SETUP
-#line 206 "lex/vocabulary.flex"
+#line 183 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(DOT);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return DOT;
                         }
 	YY_BREAK
-case 34:
+case 29:
 YY_RULE_SETUP
-#line 211 "lex/vocabulary.flex"
+#line 188 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(DIV_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return DIV_OP;
                         }
 	YY_BREAK
-case 35:
+case 30:
 YY_RULE_SETUP
-#line 216 "lex/vocabulary.flex"
+#line 193 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(REM_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return REM_OP;
                         }
 	YY_BREAK
-case 36:
+case 31:
 YY_RULE_SETUP
-#line 222 "lex/vocabulary.flex"
+#line 199 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(PLUS_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return PLUS_OP;
                         }
 	YY_BREAK
-case 37:
+case 32:
 YY_RULE_SETUP
-#line 227 "lex/vocabulary.flex"
+#line 204 "lex/vocabulary.flex"
 {
-                            std::cout << "get MINUS_OP" << std::endl;
+//                            std::cout << "get MINUS_OP" << std::endl;
                             yylval.token_node = registerToken(MINUS_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return MINUS_OP;
                         }
 	YY_BREAK
-case 38:
+case 33:
 YY_RULE_SETUP
-#line 233 "lex/vocabulary.flex"
+#line 210 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(GT_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return GT_COMP_OP;
                         }
 	YY_BREAK
-case 39:
+case 34:
 YY_RULE_SETUP
-#line 238 "lex/vocabulary.flex"
+#line 215 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(LT_COMP_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return LT_COMP_OP;
                         }
 	YY_BREAK
-case 40:
+case 35:
 YY_RULE_SETUP
-#line 243 "lex/vocabulary.flex"
+#line 220 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_OR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_OR_OP;
                         }
 	YY_BREAK
-case 41:
+case 36:
 YY_RULE_SETUP
-#line 248 "lex/vocabulary.flex"
+#line 225 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_XOR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_XOR_OP;
                         }
 	YY_BREAK
-case 42:
+case 37:
 YY_RULE_SETUP
-#line 253 "lex/vocabulary.flex"
+#line 230 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(BW_AND_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return BW_AND_OP;
                         }
 	YY_BREAK
-case 43:
+case 38:
 YY_RULE_SETUP
-#line 258 "lex/vocabulary.flex"
+#line 235 "lex/vocabulary.flex"
 {
-                            std::cout << "get SEMICOL" << std::endl;
+//                            std::cout << "get SEMICOL" << std::endl;
                             yylval.token_node = registerToken(SEMICOL);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return SEMICOL;
 				        }
 	YY_BREAK
-case 44:
+case 39:
 YY_RULE_SETUP
-#line 264 "lex/vocabulary.flex"
+#line 241 "lex/vocabulary.flex"
 {
                             yylval.token_node = registerToken(EQUAL);
     					    LexHelper::getInstance()->cur_pos += yyleng;
         					return EQUAL;
         				}
 	YY_BREAK
-case 45:
+case 40:
 YY_RULE_SETUP
-#line 270 "lex/vocabulary.flex"
+#line 247 "lex/vocabulary.flex"
 {
-                            std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
-                            ss << "Illegal identifier \"" << yytext;
-                            ss << "\" at " << helper->cur_line << ':' << helper->cur_pos;
-                            helper->error_list.push_back(ss.str());
+                            std::cerr << std::endl << "[Lexical error] ";
+                            std::cerr << "Illegal identifier \"" << yytext;
+                            std::cerr << "\" at " << helper->cur_line << ':' << helper->cur_pos << std::endl;
                             helper->cur_pos += yyleng;
                         }
 	YY_BREAK
-case 46:
+case 41:
 YY_RULE_SETUP
-#line 279 "lex/vocabulary.flex"
+#line 255 "lex/vocabulary.flex"
 {
-                            std::cout << "get RPAREN" << std::endl;
+//                            std::cout << "get RPAREN" << std::endl;
                             yylval.token_node = registerToken(RPAREN);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return RPAREN;
                         }
 	YY_BREAK
-case 47:
+case 42:
 YY_RULE_SETUP
-#line 286 "lex/vocabulary.flex"
+#line 262 "lex/vocabulary.flex"
 {
-                            std::cout << "get LPAREN" << std::endl;
+//                            std::cout << "get LPAREN" << std::endl;
                             yylval.token_node = registerToken(LPAREN);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return LPAREN;
                         }
 	YY_BREAK
-case 48:
+case 43:
 YY_RULE_SETUP
-#line 293 "lex/vocabulary.flex"
+#line 269 "lex/vocabulary.flex"
 {
-                            std::cout << "get RBRACE" << std::endl;
+//                            std::cout << "get RBRACE" << std::endl;
                             yylval.token_node = registerToken(RBRACE);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return RBRACE;
                         }
 	YY_BREAK
-case 49:
+case 44:
 YY_RULE_SETUP
-#line 300 "lex/vocabulary.flex"
+#line 276 "lex/vocabulary.flex"
 {
-                            std::cout << "get LBRACE" << std::endl;
+//                            std::cout << "get LBRACE" << std::endl;
                             yylval.token_node = registerToken(LBRACE);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return LBRACE;
                         }
 	YY_BREAK
-case 50:
+case 45:
 YY_RULE_SETUP
-#line 307 "lex/vocabulary.flex"
+#line 283 "lex/vocabulary.flex"
 {
-                            std::cout << "get COMMA" << std::endl;
+//                            std::cout << "get COMMA" << std::endl;
                             yylval.token_node = registerToken(COMMA);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return COMMA;
                         }
 	YY_BREAK
-case 51:
+case 46:
 YY_RULE_SETUP
-#line 314 "lex/vocabulary.flex"
+#line 290 "lex/vocabulary.flex"
 {
-					        std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
-					        ss << "Unexpected symbol \'" << yytext << "\' at ";
-					        ss << helper->cur_line << ":" << helper->cur_pos;
-					        helper->error_list.push_back(ss.str());
+                            std::cerr << std::endl << "[Lexical error] ";
+					        std::cerr << "Unexpected symbol \'" << yytext << "\' at ";
+					        std::cerr << helper->cur_line << ":" << helper->cur_pos << std::endl;
 					        helper->cur_pos++;
 				        }
 	YY_BREAK
-case 52:
+case 47:
 YY_RULE_SETUP
-#line 323 "lex/vocabulary.flex"
+#line 298 "lex/vocabulary.flex"
 ECHO;
 	YY_BREAK
-#line 1331 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
+#line 1275 "/home/dmikarpoff/public_repo/CXX_Compiler/compiler/lex/lexer.cpp"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1619,7 +1563,7 @@ static int yy_get_next_buffer (void)
 		while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 			{
 			yy_current_state = (int) yy_def[yy_current_state];
-			if ( yy_current_state >= 125 )
+			if ( yy_current_state >= 101 )
 				yy_c = yy_meta[(unsigned int) yy_c];
 			}
 		yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
@@ -1647,11 +1591,11 @@ static int yy_get_next_buffer (void)
 	while ( yy_chk[yy_base[yy_current_state] + yy_c] != yy_current_state )
 		{
 		yy_current_state = (int) yy_def[yy_current_state];
-		if ( yy_current_state >= 125 )
+		if ( yy_current_state >= 101 )
 			yy_c = yy_meta[(unsigned int) yy_c];
 		}
 	yy_current_state = yy_nxt[yy_base[yy_current_state] + (unsigned int) yy_c];
-	yy_is_jam = (yy_current_state == 124);
+	yy_is_jam = (yy_current_state == 100);
 
 	return yy_is_jam ? 0 : yy_current_state;
 }
@@ -2325,7 +2269,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 323 "lex/vocabulary.flex"
+#line 298 "lex/vocabulary.flex"
 
 
 
@@ -2354,9 +2298,6 @@ TokenNode* registerToken(int token) {
 
 int yywrap()
 {
-	const std::vector<std::string>& err = LexHelper::getInstance()->error_list;
-	for (size_t i = 0; i < err.size(); ++i)
-		std::cout << "[Lexical error]: " << err[i] << std::endl;
 	return 1;
 }
 

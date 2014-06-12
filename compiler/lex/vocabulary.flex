@@ -19,8 +19,18 @@ letter 				    [a-zA-Z]
 number				    (({digit}+"."?{digit}*)|(\.{digit}+))([Ee][+-]?{digit}+)?
 identificator 			_*{letter}({letter}|{digit}|_)*
 illegal_id              _*{digit}({letter}|{digit}|_)*
+comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
 
 %%
+
+{comment}               {
+                            size_t add_line = 0;
+                            for (size_t i = 0; i < yyleng; ++i)
+                                if (yytext[i] == '\n')
+                                    ++add_line;
+					        LexHelper::getInstance()->cur_line += add_line;
+					        LexHelper::getInstance()->cur_pos += yyleng;
+                        }
 
 \n\r?				    {
 					        LexHelper::getInstance()->cur_line++;
@@ -29,87 +39,64 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
 [ \t]				    {
 					        LexHelper::getInstance()->cur_pos += yyleng;
 				        }
+
 "return"                {
-                            std::cout << "get RETURN" << std::endl;
+//                            std::cout << "get RETURN" << std::endl;
                             yylval.token_node = registerToken(RETURN);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return RETURN;
                         }
 "break"                 {
-                            std::cout << "get BREAK" << std::endl;
+//                            std::cout << "get BREAK" << std::endl;
                             yylval.token_node = registerToken(BREAK);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return BREAK;
                         }
 "continue"              {
-                            std::cout << "get CONTINUE" << std::endl;
+//                            std::cout << "get CONTINUE" << std::endl;
                             yylval.token_node = registerToken(CONTINUE);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return CONTINUE;
                         }
-"namespace"             {
-                            std::cout << "get NAMESPACE" << std::endl;
-                            yylval.token_node = registerToken(NAMESPACE);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return NAMESPACE;
-                        }
 "if"                    {
-                            std::cout << "get IF" << std::endl;
+//                            std::cout << "get IF" << std::endl;
                             yylval.token_node = registerToken(IF);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return IF;
                         }
 "else"                  {
-                            std::cout << "get ELSE" << std::endl;
+//                            std::cout << "get ELSE" << std::endl;
                             yylval.token_node = registerToken(ELSE);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return ELSE;
                         }
 "for"                   {
-                            std::cout << "get FOR" << std::endl;
+//                            std::cout << "get FOR" << std::endl;
                             yylval.token_node = registerToken(FOR);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return FOR;
                         }
 "while"                 {
-                            std::cout << "get WHILE" << std::endl;
+//                            std::cout << "get WHILE" << std::endl;
                             yylval.token_node = registerToken(WHILE);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return WHILE;
                         }
 "do"                    {
-                            std::cout << "get DO" << std::endl;
+//                            std::cout << "get DO" << std::endl;
                             yylval.token_node = registerToken(DO);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return DO;
                         }
 "class"                 {
-                            std::cout << "get CLASS" << std::endl;
+//                            std::cout << "get CLASS" << std::endl;
                             yylval.token_node = registerToken(CLASS);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return CLASS;
                         }
 
-"public"                {
-                            std::cout << "get PUBLIC" << std::endl;
-                            yylval.token_node = registerToken(PUBLIC);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return PUBLIC;
-                        }
-"private"               {
-                            std::cout << "get PRIVATE" << std::endl;
-                            yylval.token_node = registerToken(PRIVATE);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return PRIVATE;
-                        }
-"protected"             {
-                            std::cout << "get PROTECTED" << std::endl;
-                            yylval.token_node = registerToken(PROTECTED);
-					        LexHelper::getInstance()->cur_pos += yyleng;
-					        return PROTECTED;
-                        }
 {number}    			{
-                            std::cout << "get NUMBER" << std::endl;
+//                            std::cout << "get NUMBER" << std::endl;
                             yylval.token_node = registerToken(NUMBER);
 					        LexHelper::getInstance()->cur_pos += yyleng;
 					        return NUMBER;
@@ -118,21 +105,16 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
                             std::string stext = std::string(yytext);
                             const std::set<std::string>& typeset = LexHelper::getInstance()->types;
                             if (typeset.find(stext) == typeset.end()) {
-                                std::cout << "get ID" << std::endl;
+//                                std::cout << "get ID" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(ID));
                 				return ID;
                             } else {
-                                std::cout << "get BASIC_TYPE" << std::endl;
+//                                std::cout << "get BASIC_TYPE" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(BASIC_TYPE));
                 				return BASIC_TYPE;
                             }
     					    LexHelper::getInstance()->cur_pos += yyleng;
 				        }
-"::"                    {
-                            yylval.token_node = registerToken(DBL_COLON);
-    					    LexHelper::getInstance()->cur_pos += yyleng;
-            				return DBL_COLON;
-                        }
 "||"                    {
                             yylval.token_node = registerToken(LOGIC_OR_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
@@ -183,11 +165,6 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return RSHIFT_OP;
                         }
-":"                     {
-                            yylval.token_node = registerToken(COLON);
-    					    LexHelper::getInstance()->cur_pos += yyleng;
-            				return COLON;
-                        }
 "~"                     {
                             yylval.token_node = registerToken(BW_NOT_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
@@ -225,7 +202,7 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
             				return PLUS_OP;
                         }
 "-"                     {
-                            std::cout << "get MINUS_OP" << std::endl;
+//                            std::cout << "get MINUS_OP" << std::endl;
                             yylval.token_node = registerToken(MINUS_OP);
     					    LexHelper::getInstance()->cur_pos += yyleng;
             				return MINUS_OP;
@@ -256,7 +233,7 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
             				return BW_AND_OP;
                         }
 ;				        {
-                            std::cout << "get SEMICOL" << std::endl;
+//                            std::cout << "get SEMICOL" << std::endl;
                             yylval.token_node = registerToken(SEMICOL);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return SEMICOL;
@@ -268,55 +245,53 @@ illegal_id              _*{digit}({letter}|{digit}|_)*
         				}
 
 {illegal_id}            {
-                            std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
-                            ss << "Illegal identifier \"" << yytext;
-                            ss << "\" at " << helper->cur_line << ':' << helper->cur_pos;
-                            helper->error_list.push_back(ss.str());
+                            std::cerr << std::endl << "[Lexical error] ";
+                            std::cerr << "Illegal identifier \"" << yytext;
+                            std::cerr << "\" at " << helper->cur_line << ':' << helper->cur_pos << std::endl;
                             helper->cur_pos += yyleng;
                         }
 
 ")"                     {
-                            std::cout << "get RPAREN" << std::endl;
+//                            std::cout << "get RPAREN" << std::endl;
                             yylval.token_node = registerToken(RPAREN);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return RPAREN;
                         }
 
 "("                     {
-                            std::cout << "get LPAREN" << std::endl;
+//                            std::cout << "get LPAREN" << std::endl;
                             yylval.token_node = registerToken(LPAREN);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return LPAREN;
                         }
 
 "}"                     {
-                            std::cout << "get RBRACE" << std::endl;
+//                            std::cout << "get RBRACE" << std::endl;
                             yylval.token_node = registerToken(RBRACE);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return RBRACE;
                         }
 
 "{"                     {
-                            std::cout << "get LBRACE" << std::endl;
+//                            std::cout << "get LBRACE" << std::endl;
                             yylval.token_node = registerToken(LBRACE);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return LBRACE;
                         }
 
 ","                     {
-                            std::cout << "get COMMA" << std::endl;
+//                            std::cout << "get COMMA" << std::endl;
                             yylval.token_node = registerToken(COMMA);
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             return COMMA;
                         }
 
 .				        {
-					        std::stringstream ss;
 					        LexHelper* helper = LexHelper::getInstance();
-					        ss << "Unexpected symbol \'" << yytext << "\' at ";
-					        ss << helper->cur_line << ":" << helper->cur_pos;
-					        helper->error_list.push_back(ss.str());
+                            std::cerr << std::endl << "[Lexical error] ";
+					        std::cerr << "Unexpected symbol \'" << yytext << "\' at ";
+					        std::cerr << helper->cur_line << ":" << helper->cur_pos << std::endl;
 					        helper->cur_pos++;
 				        }
 
@@ -347,8 +322,5 @@ TokenNode* registerToken(int token) {
 
 int yywrap()
 {
-	const std::vector<std::string>& err = LexHelper::getInstance()->error_list;
-	for (size_t i = 0; i < err.size(); ++i)
-		std::cout << "[Lexical error]: " << err[i] << std::endl;
 	return 1;
 }

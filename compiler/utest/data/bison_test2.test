@@ -1,4 +1,3 @@
-int null();
 int zero() {
     return 0;
 }

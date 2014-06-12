@@ -21,7 +21,7 @@ void yyerror(const char* message);
 }
 
 %token<token_node> NUMBER IF ELSE BREAK CONTINUE
-%token<token_node> SEMICOL NAMESPACE DBL_COLON COLON
+%token<token_node> SEMICOL
 %token<str_node>   ID BASIC_TYPE
 %token<token_node> EQUAL
 %token<token_node> COMMA LPAREN RPAREN LBRACE RBRACE
@@ -31,7 +31,7 @@ void yyerror(const char* message);
 %token<token_node> LSHIFT_OP RSHIFT_OP PLUS_OP MINUS_OP
 %token<token_node> DIV_OP MULT_OP REM_OP BW_NOT_OP LOGIC_NOT
 %token<token_node> RETURN FOR INCR_OP DECR_OP DO WHILE
-%token<token_node> CLASS PUBLIC PRIVATE PROTECTED DOT
+%token<token_node> CLASS DOT
 
 %type<synt_node> RVALUE SIGNATURE ARG_LIST ARG_LIST_TAIL LVALUE LVAL_ACCTAIL
 %type<synt_node> VAR_DECL FUNC_DECL ARG_DECL STATEMENT_LIST
@@ -39,19 +39,17 @@ void yyerror(const char* message);
 %type<synt_node> VAR_DECL_TAIL
 %type<synt_node> UNIT BLOCK
 %type<synt_node> SUPER_UNIT
-%type<synt_node> ELSESTM BOTHSTM STATEMENT
+%type<synt_node> CONDITION_ST LOOP_ST SIMPLE_ST
 %type<synt_node> LOGIC_OR_EXPR LOGIC_AND_EXPR BW_OR_EXPR
 %type<synt_node> BW_XOR_EXPR BW_AND_EXPR EQ_EXPR ORD_EXPR
 %type<synt_node> SHIFT_EXPR SUM_EXPR MULT_EXPR CAST_EXPR
-%type<synt_node> SIMPLE_EXPR INSTRUCTION SINGLE_ST
+%type<synt_node> SIMPLE_EXPR SINGLE_ST
 %type<synt_node> FUNC_CALL PARAM_LIST PARAM_LIST_TAIL
 %type<synt_node> FOR_INIT FOR_INIT_TAIL FOR_COND FOR_STEP FOR_STEP_TAIL
-%type<synt_node> LONG_NAME
-%type<synt_node> INCR_EXPR LONG_SIGNATURE
-%type<synt_node> CLASS_ENTRY DECDEF_CLASS_BLOCK ACCESS_MODE
-%type<synt_node> ACCESSED_ENTRY CONSTRUCTOR CONSTR_DEF
-%type<synt_node> DESTRUCTOR NMSP_PREFIX DESTR_DEF ELEM_EXPR
-%type<synt_node> NMSP_TAIL MEMB_ACCESS METHOD_CALL CLASS_DECDEF
+%type<synt_node> INCR_EXPR
+%type<synt_node> CLASS_ENTRY
+%type<synt_node> ELEM_EXPR
+%type<synt_node> MEMB_ACCESS CLASS_DEF
 
 %start SUPER_UNIT
 
@@ -65,9 +63,9 @@ TYPE:           BASIC_TYPE
 			        $$->children.push_back($1);
                 }
                 |
-                LONG_NAME
+                ID
                 {
-                    std::cout << "TYPE<-LONG_NAME" << std::endl;
+                    std::cout << "TYPE<-ID" << std::endl;
                     $$ = new SyntNode();
                     $$->text = "TYPE";
 			        $$->children.push_back($1);
@@ -100,45 +98,14 @@ UNIT: 			VAR_DECL UNIT
 			        $$->children.push_back($2);
                 }
                 |
-                NAMESPACE ID LBRACE UNIT RBRACE UNIT
+                CLASS_DEF UNIT 
                 {
-                    std::cout << "UNIT<-NAMESPACE ID LBRACE UNIT RBRACE UNIT" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "UNIT";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-			        $$->children.push_back($3);
-			        $$->children.push_back($4);
-			        $$->children.push_back($5);
-			        $$->children.push_back($6);
-                }
-                |
-                CLASS_DECDEF UNIT 
-                {
-                    std::cout << "UNIT<-CLASS_DECDEF UNIT" << std::endl;
+                    std::cout << "UNIT<-CLASS_DEF UNIT" << std::endl;
                     $$ = new SyntNode();
                     $$->text = "UNIT";
 			        $$->children.push_back($1);
 			        $$->children.push_back($2);
                 }    
-                |
-                CONSTR_DEF UNIT
-                {
-                    std::cout << "UNIT<-CONSTR_DEF UNIT" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "UNIT";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-                }
-                |
-                DESTR_DEF UNIT
-                {
-                    std::cout << "UNIT<-DESTR_DEF UNIT" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "UNIT";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-                }
                 |
                 {
                     std::cout << "UNIT<-eps" << std::endl;
@@ -147,45 +114,12 @@ UNIT: 			VAR_DECL UNIT
                 }
             ;
 
-DESTRUCTOR:         BW_NOT_OP ID LPAREN RPAREN
-                    {
-                        std::cout << "DESTRUCTOR<-BW_NOT_OP ID LPAREN RPAREN" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->children.push_back($3);
-                        $$->children.push_back($4);
-                        $$->text = "DESTRUCTOR";
-                    }
-            ;
 
-CONSTRUCTOR:        LONG_NAME LPAREN ARG_LIST RPAREN
-                    {
-                        std::cout << "CONSTRUCTOR<-ID LPAREN ARG_LIST RPAREN" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->children.push_back($3);
-                        $$->children.push_back($3);
-                        $$->text = "CONSTRUCTOR";                        
-                    }
-            ;
-
-CLASS_DECDEF:   CLASS ID SEMICOL 
-                {
-                    std::cout << "CLASS_DECDEF<-CLASS ID SEMICOL" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "CLASS_DECDEF";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-			        $$->children.push_back($3);
-                }    
-                |
-                CLASS LONG_NAME LBRACE CLASS_ENTRY RBRACE SEMICOL
+CLASS_DEF:   CLASS ID LBRACE CLASS_ENTRY RBRACE SEMICOL
                 {
                     $$ = new SyntNode();
-                    $$->text = "CLASS_DECDEF";
-                    std::cout << "CLASS_DECDEF<-CLASS LONG_NAME LBRACE CLASS_ENTRY RBRACE SEMICOL" << std::endl;
+                    $$->text = "CLASS_DEF";
+                    std::cout << "CLASS_DEF<-CLASS ID LBRACE CLASS_ENTRY RBRACE SEMICOL" << std::endl;
                     $$->children.push_back($1);
 			        $$->children.push_back($2);
 			        $$->children.push_back($3);
@@ -195,173 +129,18 @@ CLASS_DECDEF:   CLASS ID SEMICOL
                 }
             ;
 
-DESTR_DEF:      NMSP_PREFIX DESTRUCTOR BLOCK
-                {
-                    std::cout << "DESTR_DEF<-NMSP_PREFIX DESTRUCTOR BLOCK" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "DESTR_DEF";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-			        $$->children.push_back($3);
-                }
-                |
-                DESTRUCTOR BLOCK
-                {
-                    std::cout << "DESTR_DEF<-DESTRUCTOR BLOCK" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "DESTR_DEF";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-                }
-            ;
-
-NMSP_PREFIX:    ID DBL_COLON NMSP_TAIL
-                {
-                    std::cout << "NMSP_PREFIX<-ID DBL_COLON NMSP_TAIL" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "NMSP_PREFIX";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-			        $$->children.push_back($3);
-                }
-            ;
-
-NMSP_TAIL:      NMSP_PREFIX
-                {
-                    std::cout << "NMSP_TAIL<-NMSP_PREFIX" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "NMSP_TAIL";
-			        $$->children.push_back($1);
-                }
-                |
-                {
-                    std::cout << "NMSP_TAIL<-eps" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "eps";
-                }
-            ;
-
-CONSTR_DEF:     CONSTRUCTOR BLOCK
-                {
-                    std::cout << "CONSTR_DEF<-CONSTRUCTOR BLOCK" << std::endl;
-                    $$ = new SyntNode();
-                    $$->text = "CONSTR_DEF";
-			        $$->children.push_back($1);
-			        $$->children.push_back($2);
-                }
-            ;
-
-CLASS_ENTRY:    DECDEF_CLASS_BLOCK ACCESSED_ENTRY
-                {
-                    std::cout << "CLASS_ENTRY<-DECDEF_CLASS_BLOCK ACCESSED_ENTRY" << std::endl;
-                    $$ = new SyntNode();
-                    $$->children.push_back($1);
-                    $$->children.push_back($2);
-                    $$->text = "CLASS_ENTRY";
-                }
-            ;
-ACCESSED_ENTRY:     ACCESS_MODE COLON DECDEF_CLASS_BLOCK ACCESSED_ENTRY
+CLASS_ENTRY:        VAR_DECL CLASS_ENTRY
                     {
-                        std::cout << "ACCESSED_ENTRY<-ACCESS_MODE COLON DECDEF_CLASS_BLOCK ACCESSED_ENTRY" << std::endl;
+                        std::cout << "CLASS_ENTRY<-VAR_DECL CLASS_ENTRY" << std::endl;
                         $$ = new SyntNode();
                         $$->children.push_back($1);
                         $$->children.push_back($2);
-                        $$->children.push_back($3);
-                        $$->children.push_back($4);
-                        $$->text = "ACCESSED_ENTRY";
+                        $$->text = "CLASS_ENTRY";
                     }
                     |
+                    FUNC_DECL CLASS_ENTRY
                     {
-                        std::cout << "ACCESSED_ENTRY<-eps" << std::endl;
-                        $$ = new SyntNode();
-                        $$->text = "eps";
-                    }
-            ;
-
-ACCESS_MODE:    PUBLIC
-                {
-                    std::cout << "ACCESS_MODE<-PUBLIC" << std::endl;
-                    $$ = new SyntNode();
-                    $$->children.push_back($1);
-                    $$->text = "ACCESS_MODE";
-                }
-                |
-                PRIVATE
-                {
-                    std::cout << "ACCESS_MODE<-PRIVATE" << std::endl;
-                    $$ = new SyntNode();
-                    $$->children.push_back($1);
-                    $$->text = "ACCESS_MODE";
-                }
-                |
-                PROTECTED
-                {
-                    std::cout << "ACCESS_MODE<-PROTECTED" << std::endl;
-                    $$ = new SyntNode();
-                    $$->children.push_back($1);
-                    $$->text = "ACCESS_MODE";
-                }
-            ;
-
-DECDEF_CLASS_BLOCK: VAR_DECL DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-VAR_DECL DECDEF_CLASS_BLOCK" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->text = "DECDEF_CLASS_BLOCK";
-                    }
-                    |
-                    FUNC_DECL DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-FUNC_DECL DECDEF_CLASS_BLOCK" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->text = "DECDEF_CLASS_BLOCK";
-                    }
-                    |
-                    DESTR_DEF DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-DERSTR_DEF DECDEF_CLASS_BLOCK" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->text = "DECDEF_CLASS_BLOCK";
-                    }
-                    |
-                    DESTRUCTOR SEMICOL DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-DERSTRUCTOR SEMICOL DECDEF_CLASS_BLOCK" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->children.push_back($3);
-                        $$->text = "DECDEF_CLASS_BLOCK";
-                    }
-                    |
-                    CONSTRUCTOR SEMICOL DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-CONSTRUCTOR SEMICOL DECDEF_CLASS_BLOCK" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->children.push_back($3);
-                        $$->text = "DECDEF_CLASS_BLOCK";
-                    }
-                    |
-                    CONSTR_DEF DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-CONSTR_DEF DECDEF_CLASS_BLOCK" << std::endl;
-                        $$ = new SyntNode();
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->text = "DECDEF_CLASS_BLOCK";
-                    }
-                    |
-                    CLASS_DECDEF DECDEF_CLASS_BLOCK
-                    {
-                        std::cout << "DECDEF_CLASS_BLOCK<-CLASS_DECDEF DECDEF_CLASS_BLOCK" << std::endl;
+                        std::cout << "CLASS_ENTRY<-FUNC_DECL CLASS_ENTRY" << std::endl;
                         $$ = new SyntNode();
                         $$->children.push_back($1);
                         $$->children.push_back($2);
@@ -369,7 +148,7 @@ DECDEF_CLASS_BLOCK: VAR_DECL DECDEF_CLASS_BLOCK
                     }
                     |
                     {
-                        std::cout << "DECDEF_CLASS_BLOCK<-eps" << std::endl;
+                        std::cout << "CLASS_ENTRY<-eps" << std::endl;
                         $$ = new SyntNode();
                         $$->text = "eps";
                     }
@@ -420,30 +199,9 @@ VAR_SINGLE_DECL: 		ID EQUAL RVALUE
                             $$->text = "VAR_SINGLE_DECL";
 			                $$->children.push_back($1);
                         }
-                        |
-                        ID LPAREN RVALUE PARAM_LIST_TAIL RPAREN
-                        {
-                            std::cout << "VAR_SINGLE_DECL<-ID LPAREN RVALUE PARAM_LIST_TAIL RPAREN" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "VAR_SINGLE_DECL";
-			                $$->children.push_back($1);
-			                $$->children.push_back($2);
-			                $$->children.push_back($3);
-			                $$->children.push_back($4);
-			                $$->children.push_back($5);
-                        } 
 			    ;
 
-FUNC_DECL:              SIGNATURE SEMICOL
-                        {
-                            std::cout << "FUNC_DECL <- SIGNATURE SEMICOL" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "FUNC_DECL";
-			                $$->children.push_back($1);
-			                $$->children.push_back($2);
-                        }
-                        |
-                        SIGNATURE BLOCK
+FUNC_DECL:              SIGNATURE BLOCK
                         {
                             std::cout << "FUNC_DECL <- SIGNATURE BLOCK" << std::endl;
                             $$ = new SyntNode();
@@ -451,16 +209,6 @@ FUNC_DECL:              SIGNATURE SEMICOL
 			                $$->children.push_back($1);
 			                $$->children.push_back($2);
                         }
-                        |
-                        LONG_SIGNATURE BLOCK
-                        {
-                            std::cout << "FUNC_DECL <- LONG_SIGNATURE BLOCK" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "FUNC_DECL";
-			                $$->children.push_back($1);
-			                $$->children.push_back($2);
-                        }
-
                 ;
 
 SIGNATURE:              TYPE ID LPAREN ARG_LIST RPAREN
@@ -476,41 +224,6 @@ SIGNATURE:              TYPE ID LPAREN ARG_LIST RPAREN
                         }
                 ;
 
-LONG_SIGNATURE:         TYPE ID DBL_COLON LONG_NAME LPAREN ARG_LIST RPAREN
-                        {
-                            std::cout << "LONG_SIGNATURE<-TYPE ID DBL_COLON LONG_NAME LPAREN ARG_LIST RPAREN" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "SIGNATURE";
-			                $$->children.push_back($1);
-			                $$->children.push_back($2);
-			                $$->children.push_back($3);
-			                $$->children.push_back($4);
-			                $$->children.push_back($5);
-			                $$->children.push_back($6);
-			                $$->children.push_back($7);
-                        }
-                ;
-
-ARG_DECL:               TYPE ID
-                        {
-                            std::cout << "ARG_DECL<-TYPE ID" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "ARG_DECL";
-	                        $$->children.push_back($1);
-	                        $$->children.push_back($2);
-                        }
-                        |
-                        TYPE ID EQUAL RVALUE
-                        {
-                            std::cout << "ARG_DECL<-TYPE ID EQUAL RVALUE" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "ARG_DECL";
-	                        $$->children.push_back($1);
-	                        $$->children.push_back($2);
-	                        $$->children.push_back($3);
-	                        $$->children.push_back($4);
-                        }
-                   ;
 
 ARG_LIST:               ARG_LIST_TAIL
                         {
@@ -544,26 +257,28 @@ ARG_LIST_TAIL:          ARG_LIST_TAIL COMMA ARG_DECL
                             $$->text = "ARG_LIST_TAIL";
 	                        $$->children.push_back($1);
                         }
-                ;               
+                ;
 
-RVALUE:          		LVALUE EQUAL RVALUE
+ARG_DECL:               TYPE ID
                         {
-                            std::cout << "RVALUE<-LVALUE EQUAL RVALUE" << std::endl;
+                            std::cout << "ARG_DECL<-TYPE ID" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "RVALUE";
+                            $$->text = "ARG_DECL";
+	                        $$->children.push_back($1);
+	                        $$->children.push_back($2);
+                        }
+                        |
+                        TYPE ID EQUAL RVALUE
+                        {
+                            std::cout << "ARG_DECL<-TYPE ID EQUAL RVALUE" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "ARG_DECL";
 	                        $$->children.push_back($1);
 	                        $$->children.push_back($2);
 	                        $$->children.push_back($3);
+	                        $$->children.push_back($4);
                         }
-                        |
-                        LOGIC_OR_EXPR
-                        {
-                            std::cout << "RVALUE<-LOGIC_OR_EXPR" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "RVALUE";
-	                        $$->children.push_back($1);
-                        }
-		        ;
+                   ;
 
 BLOCK:                  LBRACE STATEMENT_LIST RBRACE
                         {
@@ -592,103 +307,52 @@ STATEMENT_LIST:         SINGLE_ST STATEMENT_LIST
                         }
                 ;
 
-SINGLE_ST:              ELSESTM
+SINGLE_ST:              CONDITION_ST
                         {
-                            std::cout << "SINGLE_ST<-ELSESTM" << std::endl;
+                            std::cout << "SINGLE_ST<-CONDITION_ST" << std::endl;
                             $$ = new SyntNode();
                             $$->text = "SINGLE_ST";
 	                        $$->children.push_back($1);
                         }
                         |
-                        BOTHSTM
+                        LOOP_ST
                         {
-                            std::cout << "SINGLE_ST<-BOTHSTM" << std::endl;
+                            std::cout << "SINGLE_ST<-LOOP_ST" << std::endl;
                             $$ = new SyntNode();
                             $$->text = "SINGLE_ST";
 	                        $$->children.push_back($1);
                         }
-                ;
-              
-BOTHSTM:                IF LPAREN RVALUE RPAREN BOTHSTM ELSE BOTHSTM
-                        {
-                            std::cout << "BOTHSTM<-IF LPAREN RVALUE RPAREN BOTHSTM ELSE BOTHSTM" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "BOTHSTM";
-	                        $$->children.push_back($1);
-	                        $$->children.push_back($2);
-	                        $$->children.push_back($3);
-	                        $$->children.push_back($4);
-	                        $$->children.push_back($5);
-	                        $$->children.push_back($6);
-	                        $$->children.push_back($7);
-                        }                        
                         |
-                        STATEMENT           
+                        SIMPLE_ST SEMICOL
                         {
-                            std::cout << "BOTHSTM<-STATEMENT" << std::endl;
+                            std::cout << "SINGLE_ST<-SIMPLE_ST SEMICOL" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "BOTHSTM";
-	                        $$->children.push_back($1);
-                        }                                                             
-                ;
-
-ELSESTM:                IF LPAREN RVALUE RPAREN SINGLE_ST
-                        {
-                            std::cout << "ELSESTM<-IF LPAREN RVALUE RPAREN SINGLE_ST" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "ELSESTM";
-	                        $$->children.push_back($1);
-	                        $$->children.push_back($2);
-	                        $$->children.push_back($3);
-	                        $$->children.push_back($4);
-	                        $$->children.push_back($5);
-                        }
-                        |
-                        IF LPAREN RVALUE RPAREN BOTHSTM ELSE ELSESTM
-                        {
-                            std::cout << "ELSESTM<-IF LPAREN RVALUE RPAREN BOTHSTM ELSE ELSESTM" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "ELSESTM";
-	                        $$->children.push_back($1);
-	                        $$->children.push_back($2);
-	                        $$->children.push_back($3);
-	                        $$->children.push_back($4);
-	                        $$->children.push_back($5);
-	                        $$->children.push_back($6);
-	                        $$->children.push_back($7);
-                        }
-                ;
-
-STATEMENT:              INSTRUCTION SEMICOL
-                        {
-                            std::cout << "STATEMENT<-INSTRUCTION SEMICOL" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "STATEMENT";
+                            $$->text = "SINGLE_ST";
 	                        $$->children.push_back($1);
 	                        $$->children.push_back($2);
                         }
                         |
                         BLOCK
                         {
-                            std::cout << "STATEMENT<-BLOCK" << std::endl;
+                            std::cout << "SINGLE_ST<-BLOCK" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "STATEMENT";
+                            $$->text = "SINGLE_ST";
 	                        $$->children.push_back($1);
                         }
                         |
                         VAR_DECL
                         {
-                            std::cout << "STATEMENT<-VAR_DECL" << std::endl;
+                            std::cout << "SINGLE_ST<-VAR_DECL" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "STATEMENT";
+                            $$->text = "SINGLE_ST";
 	                        $$->children.push_back($1);
                         }
-                        |
-                        FOR LPAREN FOR_INIT FOR_COND FOR_STEP RPAREN BOTHSTM
+                ;
+CONDITION_ST:           IF LPAREN RVALUE RPAREN SINGLE_ST ELSE SINGLE_ST
                         {
-                            std::cout << "STATEMENT<-FOR LPAREN FOR_INIT FOR_COND FOR_STEP RPAREN BOTHSTM" << std::endl;
+                            std::cout << "CONDITION_ST<-IF LPAREN RVALUE RPAREN SINGLE_ST ELSE SINGLE_ST" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "STATEMENT";
+                            $$->text = "CONDITION_ST";
 	                        $$->children.push_back($1);
 	                        $$->children.push_back($2);
 	                        $$->children.push_back($3);
@@ -698,11 +362,38 @@ STATEMENT:              INSTRUCTION SEMICOL
 	                        $$->children.push_back($7);
                         }
                         |
-                        WHILE LPAREN RVALUE RPAREN BOTHSTM
+                        IF LPAREN RVALUE RPAREN SINGLE_ST
                         {
-                            std::cout << "STATEMENT<-WHILE LPAREN RVALUE RPAREN BOTHSTM" << std::endl;
+                            std::cout << "CONDITION_ST<-IF LPAREN RVALUE RPAREN SINGLE_ST" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "STATEMENT";
+                            $$->text = "CONDITION_ST";
+	                        $$->children.push_back($1);
+	                        $$->children.push_back($2);
+	                        $$->children.push_back($3);
+	                        $$->children.push_back($4);
+	                        $$->children.push_back($5);
+                        }
+                ;
+
+LOOP_ST:                FOR LPAREN FOR_INIT FOR_COND FOR_STEP RPAREN SINGLE_ST
+                        {
+                            std::cout << "LOOP_ST<-FOR LPAREN FOR_INIT FOR_COND FOR_STEP RPAREN SINGLE_ST" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "LOOP_ST";
+	                        $$->children.push_back($1);
+	                        $$->children.push_back($2);
+	                        $$->children.push_back($3);
+	                        $$->children.push_back($4);
+	                        $$->children.push_back($5);
+	                        $$->children.push_back($6);
+	                        $$->children.push_back($7);
+                        }
+                        |
+                        WHILE LPAREN RVALUE RPAREN SINGLE_ST
+                        {
+                            std::cout << "LOOP_ST<-WHILE LPAREN RVALUE RPAREN SINGLE_ST" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "LOOP_ST";
 	                        $$->children.push_back($1);
 	                        $$->children.push_back($2);
 	                        $$->children.push_back($3);
@@ -712,9 +403,9 @@ STATEMENT:              INSTRUCTION SEMICOL
                         |
                         DO BLOCK WHILE LPAREN RVALUE RPAREN SEMICOL
                         {
-                            std::cout << "STATEMENT<-DO BLOCK WHILE LPAREN RVALUE RPAREN SEMICOL" << std::endl;
+                            std::cout << "LOOP_ST<-DO BLOCK WHILE LPAREN RVALUE RPAREN SEMICOL" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "STATEMENT";
+                            $$->text = "LOOP_ST";
 	                        $$->children.push_back($1);
 	                        $$->children.push_back($2);
 	                        $$->children.push_back($3);
@@ -722,6 +413,46 @@ STATEMENT:              INSTRUCTION SEMICOL
 	                        $$->children.push_back($5);
 	                        $$->children.push_back($6);
 	                        $$->children.push_back($7);
+                        }
+                ;
+
+SIMPLE_ST:              RVALUE
+                        {
+                            std::cout << "SIMPLE_ST<-RVALUE" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "SIMPLE_ST";
+	                        $$->children.push_back($1);
+                        }
+                        |
+                        RETURN RVALUE
+                        {
+                            std::cout << "SIMPLE_ST<-RETURN RVALUE" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "SIMPLE_ST";
+	                        $$->children.push_back($1);
+	                        $$->children.push_back($2);
+                        }
+                        |
+                        BREAK
+                        {
+                            std::cout << "SIMPLE_ST<-BREAK" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "SIMPLE_ST";
+	                        $$->children.push_back($1);
+                        }
+                        |
+                        CONTINUE
+                        {
+                            std::cout << "INSTRUCTION<-CONTINUE" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "INSTRUCTION";
+	                        $$->children.push_back($1);
+                        }
+                        |
+                        {
+                            std::cout << "INSTRUCTION<-eps" << std::endl;
+                            $$ = new SyntNode();
+                            $$->text = "eps";
                         }
                 ;
 
@@ -812,46 +543,26 @@ FOR_STEP_TAIL:          COMMA RVALUE FOR_STEP_TAIL
                             $$->text = "eps";
                         }
                 ;                                               
-INSTRUCTION:            RVALUE
+
+RVALUE:          		LVALUE EQUAL RVALUE
                         {
-                            std::cout << "INSTRUCTION<-RVALUE" << std::endl;
+                            std::cout << "RVALUE<-LVALUE EQUAL RVALUE" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "INSTRUCTION";
-	                        $$->children.push_back($1);
-                        }
-                        |
-                        RETURN RVALUE
-                        {
-                            std::cout << "INSTRUCTION<-RETURN RVALUE" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "INSTRUCTION";
+                            $$->text = "RVALUE";
 	                        $$->children.push_back($1);
 	                        $$->children.push_back($2);
+	                        $$->children.push_back($3);
                         }
                         |
+                        LOGIC_OR_EXPR
                         {
-                            std::cout << "INSTRUCTION<-eps" << std::endl;
+                            std::cout << "RVALUE<-LOGIC_OR_EXPR" << std::endl;
                             $$ = new SyntNode();
-                            $$->text = "eps";
-                        }
-                        |
-                        BREAK
-                        {
-                            std::cout << "INSTRUCTION<-BREAK" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "INSTRUCTION";
+                            $$->text = "RVALUE";
 	                        $$->children.push_back($1);
                         }
-                        |
-                        CONTINUE
-                        {
-                            std::cout << "INSTRUCTION<-CONTINUE" << std::endl;
-                            $$ = new SyntNode();
-                            $$->text = "INSTRUCTION";
-	                        $$->children.push_back($1);
-                        }
+		        ;
 
-                ;
 
 LOGIC_OR_EXPR:          LOGIC_OR_EXPR LOGIC_OR_OP LOGIC_AND_EXPR
                         {
@@ -1232,9 +943,9 @@ SIMPLE_EXPR:            LPAREN RVALUE RPAREN
                         }
                 ;
 
-FUNC_CALL:              LONG_NAME LPAREN PARAM_LIST RPAREN
+FUNC_CALL:              ID LPAREN PARAM_LIST RPAREN
                         {
-                            std::cout << "FUNC_CALL<-LONG_NAME LPAREN PARAM_LIST RPAREN" << std::endl;
+                            std::cout << "FUNC_CALL<-ID LPAREN PARAM_LIST RPAREN" << std::endl;
                             $$ = new SyntNode();
                             $$->text = "FUNC_CALL";
                             $$->children.push_back($1);
@@ -1276,28 +987,9 @@ PARAM_LIST_TAIL:        COMMA RVALUE PARAM_LIST_TAIL
                         }
                 ;
 
-LONG_NAME:              ID
+ELEM_EXPR:              ID MEMB_ACCESS
                         {
-                            std::cout << "LONG_NAME<-ID" << std::endl;
-                            $$ = new IDNode();
-                            $$->text = "LONG_NAME";
-                            $$->children.push_back($1);
-                        }
-                        |
-                        ID DBL_COLON LONG_NAME
-                        {
-                            std::cout << "LONG_NAME<-ID DBL_COLON LONG_NAME" << std::endl;
-                            $$ = new IDNode();
-                            $$->text = "LONG_NAME";
-                            $$->children.push_back($1);
-                            $$->children.push_back($2);
-                            $$->children.push_back($3);
-                        }
-                ;
-
-ELEM_EXPR:              LONG_NAME MEMB_ACCESS
-                        {
-                            std::cout << "ELEM_EXPR<-LONG_NAME MEMB_ACCESS" << std::endl;
+                            std::cout << "ELEM_EXPR<-ID MEMB_ACCESS" << std::endl;
                             $$ = new SyntNode();
                             $$->text = "ELEM_EXPR";
                             $$->children.push_back($1);
@@ -1324,7 +1016,7 @@ MEMB_ACCESS:            DOT ID MEMB_ACCESS
                             $$->children.push_back($3);
                         }
                         |
-                        DOT METHOD_CALL MEMB_ACCESS
+                        DOT FUNC_CALL MEMB_ACCESS
                         {
                             std::cout << "MEMB_ACCESS<-DOT METHOD_CALL MEMB_ACCESS" << std::endl;
                             $$ = new SyntNode();
@@ -1339,21 +1031,9 @@ MEMB_ACCESS:            DOT ID MEMB_ACCESS
                             $$ = new SyntNode();
                             $$->text = "eps";
                         }
-                ;            
-
-METHOD_CALL:        ID LPAREN PARAM_LIST RPAREN
-                    {
-                        std::cout << "METHOD_CALL<-ID LPAREN PARAM_LIST RPAREN" << std::endl;
-                        $$ = new SyntNode();
-                        $$->text = "METHOD_CALL";
-                        $$->children.push_back($1);
-                        $$->children.push_back($2);
-                        $$->children.push_back($3);
-                        $$->children.push_back($4);
-                    }
                 ;
 
-LVALUE:             LONG_NAME LVAL_ACCTAIL
+LVALUE:             ID LVAL_ACCTAIL
                     {
                         std::cout << "LVALUE<-LONG_NAME LVAL_ACCTAIL" << std::endl;
                         $$ = new SyntNode();
