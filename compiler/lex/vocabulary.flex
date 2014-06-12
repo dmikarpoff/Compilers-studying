@@ -104,6 +104,7 @@ comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
 {identificator}			{
                             std::string stext = std::string(yytext);
                             const std::set<std::string>& typeset = LexHelper::getInstance()->types;
+    					    LexHelper::getInstance()->cur_pos += yyleng;
                             if (typeset.find(stext) == typeset.end()) {
 //                                std::cout << "get ID" << std::endl;
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(ID));
@@ -113,7 +114,6 @@ comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
                                 yylval.str_node = dynamic_cast<StringToken*>(registerToken(BASIC_TYPE));
                 				return BASIC_TYPE;
                             }
-    					    LexHelper::getInstance()->cur_pos += yyleng;
 				        }
 "||"                    {
                             yylval.token_node = registerToken(LOGIC_OR_OP);
