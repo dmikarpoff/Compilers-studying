@@ -5,35 +5,53 @@
 #include <string>
 #include <cstdlib>
 
-class SuperNode
-{
+enum LangOperation {
+    opDOT, opCALL, opPARAM, opPOSTFIX_DEC,
+    opPOSTFIX_INC, opCAST, opUPLUS, opUMINUS,
+    opLNOT, opBNOT, opPREFIX_INC, opPREFIX_DEC,
+    opMULT, opREM, opDIV, opSUM, opMINUS,
+    opRSHIFT, opLSHIFT, opLT, opLE, opGT,
+    opGE, opEQ, opNE, opB_AND, opB_XOR,
+    opB_OR, opL_AND, opL_OR, opASSIGN, opRETURN
+};
+
+union ValueHolder {
+    long integer;
+    double rational;
+    bool boolean;
+};
+
+enum BasicType {
+    BOOL,
+    CHAR,
+    INT,
+    LONG,
+    FLOAT,
+    DOUBLE
+};
+
+class SuperNode {
 public:
     SuperNode():
-        parent(NULL),
-        text("EMPTY")
+        text("")
     {
 
-    }
-
-    SuperNode* getParent()
-    {
-        return parent;
-    }
-
-    const SuperNode* getParent() const
-    {
-        return parent;
-    }
-
-    void setParent(SuperNode* node)
-    {
-        parent = node;
     }
 
     virtual ~SuperNode() { }
     std::string text;
-private:
-    SuperNode* parent;
+};
+
+class UnaryOp : public SuperNode {
+public:
+    SuperNode* operand;
+    LangOperation op;
+};
+
+class BynaryOp : public SuperNode {
+public:
+    SuperNode* left, *right;
+    LangOperation op;
 };
 
 class TokenNode : public SuperNode
@@ -47,9 +65,13 @@ public:
     virtual ~TokenNode() { }
 };
 
-class StringToken : public TokenNode {
+class ConstValueNode : public SuperNode {
 public:
-    std::string str;
+    ConstValueNode():
+        SuperNode() {}
+    ConstValueNode(TokenNode* token);
+    ValueHolder value;
+    BasicType type;
 };
 
 class SyntNode : public SuperNode

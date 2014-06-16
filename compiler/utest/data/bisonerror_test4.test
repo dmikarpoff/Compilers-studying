@@ -1,0 +1,25 @@
+class Point2D {
+    float x x;
+    void setX(while xx = 0.0) 
+        x = xx;
+    }
+    setY(float yy) {
+        y = yy;
+    }
+    int getX() {
+        return x;
+
+    int getY() 
+        return y;
+    }
+    float y
+};
+
+int main() {
+    Point2D a, b;
+    a.x = (float)4;
+    class X = 2;
+    a.setY(1.0);
+    double d = (double)(abs(a.getX() - b.x + abs(a.y - b.getY()));
+    return 0;
+}

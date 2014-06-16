@@ -28,36 +28,63 @@ void exportAST(SyntNode* ast, char* source, char* out)
         Agnode_t* gnode = gstack.top();
         stack.pop();
         gstack.pop();
-//        std::cout << "cur_node: " << cur_node << std::endl;
         SyntNode* node = dynamic_cast<SyntNode*>(cur_node);
-//        std::cout << "cast successfull" << std::endl;
-//        std::cout << node << std::endl;
-//        if (cur_node != NULL)
-//            std::cout << cur_node->text << ": ";
-//        std::cout.flush();
         if (node != NULL && node->children.size() != 0)
         {
-//            std::cout << node->children.size() << std::endl;
+//            std::cout << "Synt node proccessing" << std::endl;
+//            std::cout << node->text << std::endl;
+//            std::cout << "size = " << node->children.size() << std::endl;
             for (size_t i = 0; i < node->children.size(); ++i)
             {
+//                std::cout << node->children[i]->text << std::endl;
                 ++counter;
                 std::stringstream conv;
                 conv << counter;
-//                std::cout << node->children[i] << std::endl;
-                TokenNode* tn = static_cast<TokenNode*>(node->children[i]);
-//                std::cout << tn << std::endl;
-//                if (tn != NULL)
-//                    std::cout << tn->token << std::endl;
-//                std::cout << node->children[i]->text << " ";
-//                std::cout.flush();
                 stack.push(node->children[i]);
                 tmp_str = node->children[i]->text + " (" + conv.str() + ")" + '\0';
                 Agnode_t* next = agnode(gast, &tmp_str[0], 1);
                 gstack.push(next);
                 agedge(gast, gnode, next, 0, 1);
             }
+//            std::cout << "Synt node proccessing FINISH" << std::endl;
+            continue;
         }
-//        std::cout << std::endl;
+        BynaryOp* op_node = dynamic_cast<BynaryOp*>(cur_node);
+        if (op_node != NULL)
+        {
+//            std::cout << "Bynary op proccessing" << std::endl;
+            ++counter;
+            std::stringstream conv;
+            conv << counter;
+            stack.push(op_node->left);
+            tmp_str = op_node->left->text + " (" + conv.str() + ")" + '\0';
+            Agnode_t* next = agnode(gast, &tmp_str[0], 1);
+            gstack.push(next);
+            agedge(gast, gnode, next, 0, 1);
+            if (op_node->right != NULL) {
+                conv.str("");
+                ++counter;
+                conv << counter;
+                stack.push(op_node->right);
+                tmp_str = op_node->right->text + " (" + conv.str() + ")" + '\0';
+                next = agnode(gast, &tmp_str[0], 1);
+                gstack.push(next);
+                agedge(gast, gnode, next, 0, 1);
+            }
+//            std::cout << "Bynary op proccessing FINISH" << std::endl;
+            continue;
+        }
+        UnaryOp* un_node = dynamic_cast<UnaryOp*>(cur_node);
+        if (un_node != NULL) {
+            ++counter;
+            std::stringstream conv;
+            conv << counter;
+            stack.push(un_node->operand);
+            tmp_str = un_node->operand->text + " (" + conv.str() + ")" + '\0';
+            Agnode_t* next = agnode(gast, &tmp_str[0], 1);
+            gstack.push(next);
+            agedge(gast, gnode, next, 0, 1);
+        }
     }
     gvc = gvContext();
     gvLayout(gvc, gast, "dot");
@@ -87,10 +114,17 @@ int main(int argc, char** argv)
         std::cout << "Can not open specified file" << std::endl;
         return 1;
     }
-    std::cout << "parsing START" << std::endl;
+    std::cout << "compile..." << std::endl;
     yyparse();
-    std::cout << "parsing FINISH" << std::endl;
-    SyntNode* ast = ParserHelper::getInstance()->ast;
-    exportAST(ast, argv[1], argv[2]);
+    int* counters = ParserHelper::getInstance()->error_count;
+    int total_error = counters[0] + counters[1] + counters[2];
+    if (total_error == 0) {
+        std::cout << "...successful" << std::endl;
+        SyntNode* ast = ParserHelper::getInstance()->ast;
+        exportAST(ast, argv[1], argv[2]);
+    } else {
+        std::cout << "... compilation failed with " <<
+                     total_error << " errors" << std::endl;
+    }
     return 0;
 }

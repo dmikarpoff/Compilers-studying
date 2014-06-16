@@ -4,6 +4,7 @@ double d;
 
 // another single line comment
 char c = 1, g;float i = (double)(a*c) + 0.5, j = 1E-5;
+int p, q, r, s;
 
 /*
 

@@ -17,8 +17,8 @@ public:
     void reset();
     size_t cur_line, cur_pos;
     int cur_token;
+    std::string cur_text;
     std::set<std::string> types;
-    std::vector<std::string> error_list;
 private:
     LexHelper();
     ~LexHelper()

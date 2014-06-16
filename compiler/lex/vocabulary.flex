@@ -16,7 +16,7 @@ TokenNode* registerToken(int token);
 
 digit 				    [0-9]
 letter 				    [a-zA-Z]
-number				    (({digit}+"."?{digit}*)|(\.{digit}+))([Ee][+-]?{digit}+)?
+number				    ((({digit}+"."?{digit}*)|(\.{digit}+))([Ee][+-]?{digit}+)?)|"true"|"false"
 identificator 			_*{letter}({letter}|{digit}|_)*
 illegal_id              _*{digit}({letter}|{digit}|_)*
 comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
@@ -26,10 +26,12 @@ comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
 {comment}               {
                             size_t add_line = 0;
                             for (size_t i = 0; i < yyleng; ++i)
-                                if (yytext[i] == '\n')
-                                    ++add_line;
-					        LexHelper::getInstance()->cur_line += add_line;
-					        LexHelper::getInstance()->cur_pos += yyleng;
+                                if (yytext[i] == '\n') {
+                                    ++(LexHelper::getInstance()->cur_line);
+                                    LexHelper::getInstance()->cur_pos = 1;
+                                }
+                                else
+                                    ++(LexHelper::getInstance()->cur_pos);
                         }
 
 \n\r?				    {
@@ -107,11 +109,11 @@ comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
     					    LexHelper::getInstance()->cur_pos += yyleng;
                             if (typeset.find(stext) == typeset.end()) {
 //                                std::cout << "get ID" << std::endl;
-                                yylval.str_node = dynamic_cast<StringToken*>(registerToken(ID));
+                                yylval.token_node = registerToken(ID);
                 				return ID;
                             } else {
 //                                std::cout << "get BASIC_TYPE" << std::endl;
-                                yylval.str_node = dynamic_cast<StringToken*>(registerToken(BASIC_TYPE));
+                                yylval.token_node = registerToken(BASIC_TYPE);
                 				return BASIC_TYPE;
                             }
 				        }
@@ -245,6 +247,7 @@ comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
         				}
 
 {illegal_id}            {
+                            ParserHelper::getInstance()->error_count[0]++;
 					        LexHelper* helper = LexHelper::getInstance();
                             std::cerr << std::endl << "[Lexical error] ";
                             std::cerr << "Illegal identifier \"" << yytext;
@@ -288,6 +291,7 @@ comment                 ("//"[^(\n\r?)]*\n)|("/*"[^"*/"]*"*/")
                         }
 
 .				        {
+                            ParserHelper::getInstance()->error_count[0]++;
 					        LexHelper* helper = LexHelper::getInstance();
                             std::cerr << std::endl << "[Lexical error] ";
 					        std::cerr << "Unexpected symbol \'" << yytext << "\' at ";
@@ -303,20 +307,12 @@ void initScanner() {
 
 TokenNode* registerToken(int token) {
     TokenNode* token_node;
-    StringToken* str_node;
-    if (token == ID || token == BASIC_TYPE) {
-        str_node = new StringToken();
-        token_node = static_cast<TokenNode*>(str_node);
-    } else {
-        token_node = new TokenNode();
-        str_node = NULL;
-    }
+    token_node = new TokenNode();
     LexHelper::setToken(token_node);
     token_node->text = std::string(yytext);
     token_node->token = token;
     LexHelper::getInstance()->cur_token = token;
-    if (str_node != NULL)
-        str_node->str = std::string(yytext);
+    LexHelper::getInstance()->cur_text = yytext;
     return token_node;
 }
 

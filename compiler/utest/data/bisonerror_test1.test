@@ -1,0 +1,18 @@
+int a = 2;
+double d
+/* some single-line comment */
+
+// another single line comment
+char c = 1, g;float i = (double)(a*c) + 0.5 j = 1E-5;
+int 19, q, r s;
+
+/*
+
+  large comment
+
+*/
+
+int main() {
+    if a if (c) g; else i;
+    if if (c) g;} else i;
+}
